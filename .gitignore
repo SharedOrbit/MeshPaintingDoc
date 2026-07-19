@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# VitePress build output and cache
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+docs/.vitepress/temp/
+docs/.vitepress/.temp/
+.vitepress/cache/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+vitepress-dev.log
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

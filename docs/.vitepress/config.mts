@@ -1,0 +1,78 @@
+import { defineConfig } from 'vitepress'
+
+export default defineConfig({
+  title: 'Mesh Painting',
+  description: 'Runtime and multiplayer-ready mesh painting for Unreal Engine.',
+  base: '/mesh-painting-runtime-multiplayer-ready/',
+  lang: 'en-US',
+  cleanUrls: true,
+  lastUpdated: true,
+
+  head: [
+    ['link', { rel: 'icon', href: '/mesh-painting-runtime-multiplayer-ready/icon.png' }],
+    ['meta', { name: 'theme-color', content: '#1d4ed8' }],
+    ['meta', { property: 'og:title', content: 'Mesh Painting - Runtime & Multiplayer Ready' }],
+    ['meta', { property: 'og:description', content: 'GPU-based runtime mesh painting plugin for Unreal Engine static and skeletal meshes.' }]
+  ],
+
+  themeConfig: {
+    logo: '/icon.png',
+    siteTitle: 'Mesh Painting',
+
+    search: {
+      provider: 'local'
+    },
+
+    nav: [
+      { text: 'Guide', link: '/guide/overview' },
+      { text: 'Systems', link: '/systems/paint-target' },
+      { text: 'API', link: '/api/blueprint' },
+      { text: 'Support', link: '/support' }
+    ],
+
+    sidebar: [
+      {
+        text: 'Getting Started',
+        items: [
+          { text: 'Overview', link: '/guide/overview' },
+          { text: 'Installation', link: '/guide/installation' },
+          { text: 'Quick Start', link: '/guide/quick-start' },
+          { text: 'Material Setup', link: '/guide/material-setup' }
+        ]
+      },
+      {
+        text: 'Systems',
+        items: [
+          { text: 'Paint Target Component', link: '/systems/paint-target' },
+          { text: 'Painting Controller', link: '/systems/painting-controller' },
+          { text: 'Color Picker', link: '/systems/color-picker' },
+          { text: 'Multiplayer', link: '/systems/multiplayer' },
+          { text: 'Packaging', link: '/systems/packaging' }
+        ]
+      },
+      {
+        text: 'Reference',
+        items: [
+          { text: 'Blueprint API', link: '/api/blueprint' },
+          { text: 'Troubleshooting', link: '/reference/troubleshooting' },
+          { text: 'Changelog', link: '/reference/changelog' },
+          { text: 'Support', link: '/support' }
+        ]
+      }
+    ],
+
+    outline: {
+      level: [2, 3]
+    },
+
+    editLink: {
+      pattern: 'https://github.com/SharedOrbit/mesh-painting-runtime-multiplayer-ready/edit/main/docs/:path',
+      text: 'Edit this page'
+    },
+
+    footer: {
+      message: 'Runtime Mesh Painting documentation.',
+      copyright: 'Copyright Shared Orbit'
+    }
+  }
+})
