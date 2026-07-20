@@ -2,8 +2,8 @@
 import RoadmapBoard from './.vitepress/theme/components/RoadmapBoard.vue'
 </script>
 
-# Roadmap
+# Mesh Painting Public Roadmap
 
-This page tracks planned improvements for Mesh Painting. Click a card to expand details.
+Track planned improvements, research items, and completed runtime painting features.
 
 <RoadmapBoard />
