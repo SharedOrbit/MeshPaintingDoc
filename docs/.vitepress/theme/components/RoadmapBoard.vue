@@ -52,7 +52,7 @@ const feedbackContact = ref('')
 const feedbackStatus = ref<'idle' | 'success' | 'error'>('idle')
 const feedbackStatusMessage = ref('')
 const isSubmittingFeedback = ref(false)
-const feedbackEndpoint = import.meta.env.VITE_ROADMAP_FEEDBACK_ENDPOINT || ''
+const feedbackEndpoint = 'https://script.google.com/macros/s/AKfycbxvP0IHYQYR42OBfVzPTcmLgKiGK--pMppcOUwpuNvgRj1COvmC0A-xDs9dy4mF0qx2/exec'
 
 function resetFeedbackForm() {
   selectedImportance.value = ''
@@ -84,22 +84,14 @@ async function submitFeedback() {
     return
   }
 
-  if (!feedbackEndpoint) {
-    feedbackStatus.value = 'error'
-    feedbackStatusMessage.value = 'Feedback endpoint is not configured yet.'
-    return
-  }
-
   isSubmittingFeedback.value = true
   feedbackStatus.value = 'idle'
   feedbackStatusMessage.value = ''
 
   try {
-    const response = await fetch(feedbackEndpoint, {
+    await fetch(feedbackEndpoint, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      mode: 'no-cors',
       body: JSON.stringify({
         feature: activeFeature.value.card.title,
         importance: selectedImportance.value,
@@ -108,10 +100,6 @@ async function submitFeedback() {
         page: typeof window !== 'undefined' ? window.location.href : '/roadmap'
       })
     })
-
-    if (!response.ok) {
-      throw new Error('Feedback request failed')
-    }
 
     feedbackMessage.value = ''
     feedbackContact.value = ''
