@@ -335,6 +335,11 @@ body {
   max-width: none;
 }
 
+body:has(._MeshPaintingDoc_roadmap) {
+  --roadmap-layout-width: min(1632px, calc(100vw - 64px));
+  --roadmap-layout-gutter: calc((100vw - var(--roadmap-layout-width)) / 2);
+}
+
 .VPDoc:has(._MeshPaintingDoc_roadmap) .container,
 .VPDoc:has(._MeshPaintingDoc_roadmap) .main,
 .VPDoc:has(._MeshPaintingDoc_roadmap) .vp-doc {
@@ -401,8 +406,7 @@ body {
 
 .roadmap-grid {
   display: grid;
-  width: min(1360px, calc(100vw - var(--vp-sidebar-width) - 96px));
-  margin-inline: auto;
+  width: 100%;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
 }
@@ -710,6 +714,30 @@ body {
 .roadmap-modal-footer button:hover {
   background: #c7d0da;
   color: #141b23;
+}
+
+@media (min-width: 960px) {
+  body:has(._MeshPaintingDoc_roadmap) .VPSidebar {
+    left: var(--roadmap-layout-gutter);
+    width: var(--vp-sidebar-width);
+    padding-right: 32px;
+    padding-left: 32px;
+  }
+
+  body:has(._MeshPaintingDoc_roadmap) .VPContent.has-sidebar {
+    padding-right: var(--roadmap-layout-gutter);
+    padding-left: calc(var(--roadmap-layout-gutter) + var(--vp-sidebar-width));
+  }
+
+  .VPDoc:has(._MeshPaintingDoc_roadmap) {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .VPDoc:has(._MeshPaintingDoc_roadmap) .content {
+    padding-right: 0;
+    padding-left: 0;
+  }
 }
 
 .DocSearch-Button {
