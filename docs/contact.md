@@ -2,7 +2,7 @@
 
 For support, feedback, and questions about Shared Orbit plugins, use the Discord server first:
 
-[Join the Shared Orbit Discord](https://discord.gg/vAAG8BWztp)
+[Join the Shared Orbit Discord](https://discord.gg/EZgdkvpkJv)
 
 Discord is the recommended place for:
 
