@@ -232,26 +232,24 @@ body {
   line-height: 1.65;
 }
 
-.VPFeature .link-text {
-  padding-top: 18px;
+.VPFeature.link .box::after {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid #78c3ff;
+  border-bottom: 2px solid #78c3ff;
+  content: "";
+  transform: rotate(-45deg);
+  transition:
+    border-color 0.2s,
+    transform 0.2s;
 }
 
-.VPFeature .link-text-value {
-  display: inline-flex;
-  width: fit-content;
-  min-height: 32px;
-  padding: 0 12px;
-  border: 1px solid rgba(120, 195, 255, 0.5);
-  border-radius: 6px;
-  background: rgba(22, 120, 210, 0.16);
-  color: #9bd4ff;
-  font-weight: 800;
-}
-
-.VPFeature.link:hover .link-text-value {
-  border-color: rgba(245, 158, 11, 0.72);
-  background: rgba(245, 158, 11, 0.12);
-  color: #ffd38a;
+.VPFeature.link:hover .box::after {
+  border-color: #ffd38a;
+  transform: translateX(3px) rotate(-45deg);
 }
 
 .VPDoc {

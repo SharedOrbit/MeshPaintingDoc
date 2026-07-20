@@ -10,28 +10,22 @@ hero:
     alt: Runtime Mesh Painting icon
 
 features:
-  - title: Runtime GPU Painting
-    details: Paint directly at runtime through a GPU projected brush renderer and persistent render targets.
-    link: /guide/overview
-    linkText: Open
-  - title: Static & Skeletal Meshes
-    details: Supports mesh targets used by gameplay characters, actors, and runtime painting workflows.
-    link: /systems/paint-target
-    linkText: Open
-  - title: UV Island Clipping
-    details: Large brushes are clipped to the hit surface so unrelated UV islands are protected.
-    link: /guide/material-setup
-    linkText: Open
-  - title: Full Paint Controls
-    details: Brush preview, color picker, eyedropper, eraser, opacity, hardness, metallic, and roughness controls.
-    link: /systems/painting-controller
-    linkText: Open
-  - title: Multiplayer Ready
+  - title: Quick Start
+    details: Set up a paint target, prepare the material, and enter paint mode.
+    link: /guide/quick-start
+  - title: Quick Start
+    details: Install the plugin and confirm the required runtime content paths.
+    link: /guide/installation
+  - title: Demo
+    details: Watch the core painting workflow, brush behavior, eraser, and color tools.
+    link: /demo
+  - title: Multiplayer
     details: Replicates compact paint commands instead of textures, with late join replay support.
     link: /systems/multiplayer
-    linkText: Open
-  - title: Shipping Focused
-    details: Runtime module, plugin content, and shader loading are prepared for packaged builds.
-    link: /systems/packaging
-    linkText: Open
+  - title: About
+    details: Learn what the plugin does and which runtime systems it includes.
+    link: /about
+  - title: Contact
+    details: Get support for setup, packaging, integration, and multiplayer issues.
+    link: /contact
 ---
