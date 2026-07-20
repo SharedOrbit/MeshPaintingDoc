@@ -352,11 +352,12 @@ body {
 
 ._MeshPaintingDoc_roadmap > div > h1 {
   margin-bottom: 10px;
-  border-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0 !important;
 }
 
 .roadmap-page {
-  margin: 22px -8px 0;
+  margin: 18px -8px 0;
   padding-bottom: 38px;
 }
 
@@ -368,7 +369,7 @@ body {
   gap: 0;
   margin: 0 calc(50% - 50vw) 48px;
   padding: 0 max(24px, calc((100vw - 1680px) / 2));
-  border-bottom: 1px solid rgba(73, 92, 112, 0.88);
+  border-bottom: 0;
   background: rgba(17, 24, 31, 0.98);
   overflow-x: auto;
 }
@@ -398,7 +399,7 @@ body {
 
 .roadmap-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(286px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
 }
 
