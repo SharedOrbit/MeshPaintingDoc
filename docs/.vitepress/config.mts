@@ -7,6 +7,7 @@ export default defineConfig({
   lang: 'en-US',
   cleanUrls: true,
   lastUpdated: true,
+  appearance: 'dark',
 
   head: [
     ['link', { rel: 'icon', href: '/Mesh-Painting---Runtime-Multiplayer-Ready/icon.png' }],
