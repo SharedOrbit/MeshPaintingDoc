@@ -394,11 +394,13 @@ body {
 }
 
 .roadmap-section {
-  margin-top: 48px;
+  margin: 48px calc(50% - 50vw) 0;
+  padding: 0 max(24px, calc((100vw - 1680px) / 2));
 }
 
 .roadmap-grid {
   display: grid;
+  max-width: 1360px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
 }
