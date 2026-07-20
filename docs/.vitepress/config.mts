@@ -77,11 +77,6 @@ export default defineConfig({
       level: [2, 3]
     },
 
-    editLink: {
-      pattern: 'https://github.com/SharedOrbit/MeshPaintingDoc/edit/main/docs/:path',
-      text: 'Edit this page'
-    },
-
     footer: {
       message: 'Runtime Mesh Painting documentation.',
       copyright: 'Copyright Shared Orbit'
