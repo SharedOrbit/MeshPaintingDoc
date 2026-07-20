@@ -35,6 +35,14 @@ const cards: RoadmapCard[] = [
     description: 'Texture painting support so projects can paint with selected texture masks or surface patterns instead of only flat color. This would let players apply details such as metal plates, fabric, dirt, decals, camouflage, or custom brush textures directly onto runtime paint targets.'
   },
   {
+    title: 'Feedback Driven Updates',
+    imageTone: 'blue',
+    imageLabel: 'Feedback Loop',
+    imageSrc: '/roadmap/feedback-updates.png',
+    posted: 'Forward looking',
+    description: 'Ongoing improvements based on user feedback, reported issues, and practical production needs. Confirmed bugs will be prioritized for fixes, while useful workflow suggestions can shape future runtime painting features and documentation updates.'
+  },
+  {
     title: 'Material Examples',
     imageTone: 'gray',
     imageLabel: 'Material Graph',
