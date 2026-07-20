@@ -332,7 +332,8 @@ body {
 }
 
 .VPDoc:has(._MeshPaintingDoc_roadmap) .content-container {
-  max-width: none;
+  width: 100%;
+  max-width: none !important;
 }
 
 body:has(._MeshPaintingDoc_roadmap) {
@@ -343,7 +344,8 @@ body:has(._MeshPaintingDoc_roadmap) {
 .VPDoc:has(._MeshPaintingDoc_roadmap) .container,
 .VPDoc:has(._MeshPaintingDoc_roadmap) .main,
 .VPDoc:has(._MeshPaintingDoc_roadmap) .vp-doc {
-  max-width: none;
+  width: 100%;
+  max-width: none !important;
 }
 
 .VPDoc:has(._MeshPaintingDoc_roadmap) .aside {
@@ -351,7 +353,8 @@ body:has(._MeshPaintingDoc_roadmap) {
 }
 
 .VPDoc:has(._MeshPaintingDoc_roadmap) .content {
-  max-width: none;
+  width: 100%;
+  max-width: none !important;
   padding-right: 24px;
 }
 
@@ -373,8 +376,8 @@ body:has(._MeshPaintingDoc_roadmap) {
   z-index: 6;
   display: flex;
   gap: 0;
-  margin: 0 calc(50% - 50vw) 48px;
-  padding: 0 max(24px, calc((100vw - 1680px) / 2));
+  margin: 0 0 48px;
+  padding: 0;
   border-bottom: 0;
   background: rgba(17, 24, 31, 0.98);
   overflow-x: auto;
@@ -717,6 +720,18 @@ body:has(._MeshPaintingDoc_roadmap) {
 }
 
 @media (min-width: 960px) {
+  body:has(._MeshPaintingDoc_roadmap) .VPNavBar.has-sidebar .title {
+    left: var(--roadmap-layout-gutter);
+    width: var(--vp-sidebar-width);
+    padding-right: 32px;
+    padding-left: 32px;
+  }
+
+  body:has(._MeshPaintingDoc_roadmap) .VPNavBar.has-sidebar .content {
+    padding-right: var(--roadmap-layout-gutter);
+    padding-left: calc(var(--roadmap-layout-gutter) + var(--vp-sidebar-width));
+  }
+
   body:has(._MeshPaintingDoc_roadmap) .VPSidebar {
     left: var(--roadmap-layout-gutter);
     width: var(--vp-sidebar-width);
@@ -734,7 +749,14 @@ body:has(._MeshPaintingDoc_roadmap) {
     padding-left: 0;
   }
 
+  .VPDoc:has(._MeshPaintingDoc_roadmap) .container {
+    display: block !important;
+    margin: 0 !important;
+  }
+
   .VPDoc:has(._MeshPaintingDoc_roadmap) .content {
+    min-width: 0 !important;
+    margin: 0 !important;
     padding-right: 0;
     padding-left: 0;
   }
