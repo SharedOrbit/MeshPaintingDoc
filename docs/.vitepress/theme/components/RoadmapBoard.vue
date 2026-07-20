@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
+import { withBase } from 'vitepress'
 
 type RoadmapCard = {
   title: string
   description: string
   imageTone?: 'blue' | 'orange' | 'green' | 'gray'
   imageLabel?: string
+  imageSrc?: string
   completed?: boolean
   author?: string
   posted?: string
@@ -36,11 +38,12 @@ const sections: RoadmapSection[] = [
     title: 'Next Update',
     cards: [
       {
-        title: 'Demo Video',
+        title: 'Brush Types',
         imageTone: 'blue',
-        imageLabel: 'Runtime Paint Demo',
-        posted: 'Posted on July 2026',
-        description: 'A short video showing static mesh painting, skeletal mesh painting, color picking, eraser mode, and multiplayer replication.'
+        imageLabel: 'Round / Star / Scatter',
+        imageSrc: '/roadmap/brush-types.png',
+        posted: 'Planned for a future update',
+        description: 'Optional brush type support so projects can let players paint with different brush masks instead of only the default round brush. The feature can be enabled when a game wants selectable shapes such as round, star, scatter, square, soft, or splash.'
       },
       {
         title: 'Sample Project',
@@ -201,9 +204,15 @@ onUnmounted(() => {
           <span class="roadmap-card-title">{{ card.title }}</span>
           <span
             class="roadmap-card-image"
-            :class="[`tone-${card.imageTone || 'gray'}`, { completed: card.completed }]"
+            :class="[`tone-${card.imageTone || 'gray'}`, { completed: card.completed, 'has-real-image': card.imageSrc }]"
           >
-            <span class="roadmap-card-image-label">{{ card.imageLabel || card.title }}</span>
+            <img
+              v-if="card.imageSrc"
+              :src="withBase(card.imageSrc)"
+              :alt="card.imageLabel || card.title"
+              loading="lazy"
+            >
+            <span v-else class="roadmap-card-image-label">{{ card.imageLabel || card.title }}</span>
           </span>
         </button>
       </div>
@@ -223,13 +232,18 @@ onUnmounted(() => {
           aria-labelledby="roadmap-modal-title"
         >
           <button type="button" class="roadmap-modal-close" aria-label="Close roadmap detail" @click="closeCard">
-            ×
+            x
           </button>
           <div
             class="roadmap-modal-image"
-            :class="[`tone-${activeFeature.card.imageTone || 'gray'}`, { completed: activeFeature.card.completed }]"
+            :class="[`tone-${activeFeature.card.imageTone || 'gray'}`, { completed: activeFeature.card.completed, 'has-real-image': activeFeature.card.imageSrc }]"
           >
-            <span class="roadmap-modal-image-label">{{ activeFeature.card.imageLabel || activeFeature.card.title }}</span>
+            <img
+              v-if="activeFeature.card.imageSrc"
+              :src="withBase(activeFeature.card.imageSrc)"
+              :alt="activeFeature.card.imageLabel || activeFeature.card.title"
+            >
+            <span v-else class="roadmap-modal-image-label">{{ activeFeature.card.imageLabel || activeFeature.card.title }}</span>
           </div>
           <div class="roadmap-modal-body">
             <p class="roadmap-modal-section">{{ activeFeature.sectionTitle }}</p>

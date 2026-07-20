@@ -473,7 +473,9 @@ body {
 }
 
 .roadmap-card-image::before,
-.roadmap-card-image::after {
+.roadmap-card-image::after,
+.roadmap-modal-image::before,
+.roadmap-modal-image::after {
   position: absolute;
   content: "";
   pointer-events: none;
@@ -498,6 +500,26 @@ body {
     rgba(5, 9, 13, 0.42);
   box-shadow: 0 18px 34px rgba(0, 0, 0, 0.32);
   transform: perspective(380px) rotateX(58deg) rotateZ(-24deg);
+}
+
+.roadmap-card-image.has-real-image,
+.roadmap-modal-image.has-real-image {
+  background: #101820;
+}
+
+.roadmap-card-image.has-real-image::before,
+.roadmap-card-image.has-real-image::after,
+.roadmap-modal-image.has-real-image::before,
+.roadmap-modal-image.has-real-image::after {
+  display: none;
+}
+
+.roadmap-card-image img,
+.roadmap-modal-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .roadmap-card-image.tone-orange,
@@ -590,9 +612,24 @@ body {
   min-height: 245px;
 }
 
+.roadmap-modal-image::before {
+  inset: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 34px 34px;
+  opacity: 0.18;
+}
+
 .roadmap-modal-image::after {
   width: 260px;
   height: 152px;
+  border: 1px solid rgba(238, 244, 251, 0.24);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0)),
+    rgba(5, 9, 13, 0.42);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.32);
   transform: perspective(500px) rotateX(58deg) rotateZ(-24deg);
 }
 
