@@ -13,9 +13,9 @@ features:
   - title: Quick Start
     details: Set up a paint target, prepare the material, and enter paint mode.
     link: /guide/quick-start
-  - title: Quick Start
-    details: Install the plugin and confirm the required runtime content paths.
-    link: /guide/installation
+  - title: Roadmap
+    details: See planned improvements, documentation updates, and future runtime painting features.
+    link: /roadmap
   - title: Demo
     details: Watch the core painting workflow, brush behavior, eraser, and color tools.
     link: /demo

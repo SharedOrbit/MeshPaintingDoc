@@ -26,9 +26,10 @@ export default defineConfig({
 
     nav: [
       { text: 'Quick Start', link: '/guide/quick-start' },
-      { text: 'About', link: '/about' },
-      { text: 'Multiplayer', link: '/systems/multiplayer' },
+      { text: 'Roadmap', link: '/roadmap' },
       { text: 'Demo', link: '/demo' },
+      { text: 'Multiplayer', link: '/systems/multiplayer' },
+      { text: 'About', link: '/about' },
       { text: 'Contact', link: '/contact' }
     ],
 
@@ -36,8 +37,9 @@ export default defineConfig({
       {
         text: 'Product',
         items: [
-          { text: 'About', link: '/about' },
+          { text: 'Roadmap', link: '/roadmap' },
           { text: 'Demo', link: '/demo' },
+          { text: 'About', link: '/about' },
           { text: 'Contact', link: '/contact' }
         ]
       },
