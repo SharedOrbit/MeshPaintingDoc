@@ -339,6 +339,8 @@ body {
 body:has(._MeshPaintingDoc_roadmap) {
   --roadmap-layout-width: min(1632px, calc(100vw - 64px));
   --roadmap-layout-gutter: calc((100vw - var(--roadmap-layout-width)) / 2);
+  --roadmap-sidebar-offset-x: -20px;
+  --roadmap-content-offset-x: 0px;
 }
 
 .VPDoc:has(._MeshPaintingDoc_roadmap) .container,
@@ -721,27 +723,27 @@ body:has(._MeshPaintingDoc_roadmap) {
 
 @media (min-width: 960px) {
   body:has(._MeshPaintingDoc_roadmap) .VPNavBar.has-sidebar .title {
-    left: var(--roadmap-layout-gutter);
+    left: calc(var(--roadmap-layout-gutter) + var(--roadmap-sidebar-offset-x));
     width: var(--vp-sidebar-width);
     padding-right: 32px;
     padding-left: 32px;
   }
 
   body:has(._MeshPaintingDoc_roadmap) .VPNavBar.has-sidebar .content {
-    padding-right: var(--roadmap-layout-gutter);
-    padding-left: calc(var(--roadmap-layout-gutter) + var(--vp-sidebar-width));
+    padding-right: calc(var(--roadmap-layout-gutter) - var(--roadmap-content-offset-x));
+    padding-left: calc(var(--roadmap-layout-gutter) + var(--vp-sidebar-width) + var(--roadmap-content-offset-x));
   }
 
   body:has(._MeshPaintingDoc_roadmap) .VPSidebar {
-    left: var(--roadmap-layout-gutter);
+    left: calc(var(--roadmap-layout-gutter) + var(--roadmap-sidebar-offset-x));
     width: var(--vp-sidebar-width);
     padding-right: 32px;
     padding-left: 32px;
   }
 
   body:has(._MeshPaintingDoc_roadmap) .VPContent.has-sidebar {
-    padding-right: var(--roadmap-layout-gutter);
-    padding-left: calc(var(--roadmap-layout-gutter) + var(--vp-sidebar-width));
+    padding-right: calc(var(--roadmap-layout-gutter) - var(--roadmap-content-offset-x));
+    padding-left: calc(var(--roadmap-layout-gutter) + var(--vp-sidebar-width) + var(--roadmap-content-offset-x));
   }
 
   .VPDoc:has(._MeshPaintingDoc_roadmap) {
