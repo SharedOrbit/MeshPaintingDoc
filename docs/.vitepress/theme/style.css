@@ -333,7 +333,10 @@ body {
 
 .VPDoc:has(._MeshPaintingDoc_roadmap) .content-container {
   max-width: none;
-  margin: 0;
+}
+
+._MeshPaintingDoc_roadmap {
+  --roadmap-left-shift: clamp(36px, 3vw, 64px);
 }
 
 .VPDoc:has(._MeshPaintingDoc_roadmap) .container,
@@ -355,12 +358,7 @@ body {
   margin-bottom: 10px;
   padding-bottom: 0;
   border-bottom: 0 !important;
-}
-
-._MeshPaintingDoc_roadmap > div {
-  max-width: 1128px;
-  margin-left: clamp(72px, 7vw, 128px);
-  margin-right: auto;
+  transform: translateX(calc(var(--roadmap-left-shift) * -1));
 }
 
 .roadmap-page {
@@ -407,9 +405,10 @@ body {
 
 .roadmap-grid {
   display: grid;
-  width: 100%;
+  width: min(1360px, calc(100vw - var(--vp-sidebar-width) - 96px));
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
+  transform: translateX(calc(var(--roadmap-left-shift) * -1));
 }
 
 .roadmap-card {
@@ -734,10 +733,9 @@ body {
 }
 
 @media (max-width: 960px) {
-  ._MeshPaintingDoc_roadmap > div {
-    max-width: none;
-    margin-left: 0;
-    margin-right: 0;
+  ._MeshPaintingDoc_roadmap > div > h1,
+  .roadmap-grid {
+    transform: none;
   }
 
   .roadmap-grid {
