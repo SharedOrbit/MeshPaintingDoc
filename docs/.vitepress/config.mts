@@ -25,13 +25,22 @@ export default defineConfig({
     },
 
     nav: [
-      { text: 'Guide', link: '/guide/overview' },
-      { text: 'Systems', link: '/systems/paint-target' },
-      { text: 'API', link: '/api/blueprint' },
-      { text: 'Support', link: '/support' }
+      { text: 'Quick Start', link: '/guide/quick-start' },
+      { text: 'About', link: '/about' },
+      { text: 'Multiplayer', link: '/systems/multiplayer' },
+      { text: 'Demo', link: '/demo' },
+      { text: 'Contact', link: '/contact' }
     ],
 
     sidebar: [
+      {
+        text: 'Product',
+        items: [
+          { text: 'About', link: '/about' },
+          { text: 'Demo', link: '/demo' },
+          { text: 'Contact', link: '/contact' }
+        ]
+      },
       {
         text: 'Getting Started',
         items: [
