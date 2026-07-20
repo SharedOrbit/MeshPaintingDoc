@@ -46,13 +46,83 @@ const cards: RoadmapCard[] = [
 
 const importanceLabels = ['NOT IMPORTANT', 'NICE-TO-HAVE', 'IMPORTANT', 'CRITICAL']
 const activeFeature = ref<ActiveRoadmapCard | null>(null)
+const selectedImportance = ref('')
+const feedbackMessage = ref('')
+const feedbackContact = ref('')
+const feedbackStatus = ref<'idle' | 'success' | 'error'>('idle')
+const feedbackStatusMessage = ref('')
+const isSubmittingFeedback = ref(false)
+const feedbackEndpoint = import.meta.env.VITE_ROADMAP_FEEDBACK_ENDPOINT || ''
+
+function resetFeedbackForm() {
+  selectedImportance.value = ''
+  feedbackMessage.value = ''
+  feedbackContact.value = ''
+  feedbackStatus.value = 'idle'
+  feedbackStatusMessage.value = ''
+  isSubmittingFeedback.value = false
+}
 
 function openCard(card: RoadmapCard) {
   activeFeature.value = { card }
+  resetFeedbackForm()
 }
 
 function closeCard() {
   activeFeature.value = null
+  resetFeedbackForm()
+}
+
+function selectImportance(label: string) {
+  selectedImportance.value = label
+  feedbackStatus.value = 'idle'
+  feedbackStatusMessage.value = ''
+}
+
+async function submitFeedback() {
+  if (!activeFeature.value || !selectedImportance.value || !feedbackMessage.value.trim()) {
+    return
+  }
+
+  if (!feedbackEndpoint) {
+    feedbackStatus.value = 'error'
+    feedbackStatusMessage.value = 'Feedback endpoint is not configured yet.'
+    return
+  }
+
+  isSubmittingFeedback.value = true
+  feedbackStatus.value = 'idle'
+  feedbackStatusMessage.value = ''
+
+  try {
+    const response = await fetch(feedbackEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        feature: activeFeature.value.card.title,
+        importance: selectedImportance.value,
+        message: feedbackMessage.value.trim(),
+        contact: feedbackContact.value.trim(),
+        page: typeof window !== 'undefined' ? window.location.href : '/roadmap'
+      })
+    })
+
+    if (!response.ok) {
+      throw new Error('Feedback request failed')
+    }
+
+    feedbackMessage.value = ''
+    feedbackContact.value = ''
+    feedbackStatus.value = 'success'
+    feedbackStatusMessage.value = 'Feedback sent.'
+  } catch {
+    feedbackStatus.value = 'error'
+    feedbackStatusMessage.value = 'Feedback could not be sent.'
+  } finally {
+    isSubmittingFeedback.value = false
+  }
 }
 
 function handleKeydown(event: KeyboardEvent) {
@@ -140,11 +210,50 @@ onUnmounted(() => {
           </div>
           <footer class="roadmap-modal-footer">
             <strong>How important is this to you?</strong>
-            <div>
-              <button v-for="label in importanceLabels" :key="label" type="button">
+            <div class="roadmap-feedback-buttons">
+              <button
+                v-for="label in importanceLabels"
+                :key="label"
+                type="button"
+                :class="{ active: selectedImportance === label }"
+                @click="selectImportance(label)"
+              >
                 {{ label }}
               </button>
             </div>
+            <form v-if="selectedImportance" class="roadmap-feedback-form" @submit.prevent="submitFeedback">
+              <label for="roadmap-feedback-message">
+                Feedback for {{ selectedImportance }}
+              </label>
+              <textarea
+                id="roadmap-feedback-message"
+                v-model="feedbackMessage"
+                maxlength="1500"
+                rows="4"
+                placeholder="Tell us what should be improved or why this matters."
+              />
+              <input
+                v-model="feedbackContact"
+                maxlength="120"
+                placeholder="Discord or email (optional)"
+                type="text"
+              >
+              <div class="roadmap-feedback-actions">
+                <span
+                  class="roadmap-feedback-status"
+                  :class="{ success: feedbackStatus === 'success', error: feedbackStatus === 'error' }"
+                >
+                  {{ feedbackStatusMessage }}
+                </span>
+                <button
+                  class="roadmap-feedback-submit"
+                  type="submit"
+                  :disabled="isSubmittingFeedback || !feedbackMessage.trim()"
+                >
+                  {{ isSubmittingFeedback ? 'SENDING' : 'SEND FEEDBACK' }}
+                </button>
+              </div>
+            </form>
           </footer>
         </article>
       </div>

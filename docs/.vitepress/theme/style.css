@@ -702,7 +702,7 @@ body:has(._MeshPaintingDoc_roadmap) {
   font-weight: 900;
 }
 
-.roadmap-modal-footer div {
+.roadmap-feedback-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 9px;
@@ -723,6 +723,91 @@ body:has(._MeshPaintingDoc_roadmap) {
 .roadmap-modal-footer button:hover {
   background: #c7d0da;
   color: #141b23;
+}
+
+.roadmap-modal-footer button.active {
+  background: #47a8ff;
+  color: #07111d;
+}
+
+.roadmap-feedback-form {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.roadmap-feedback-form label {
+  color: #9fb0c1;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.roadmap-feedback-form textarea,
+.roadmap-feedback-form input {
+  width: 100%;
+  border: 1px solid rgba(73, 92, 112, 0.78);
+  border-radius: 5px;
+  background: #0d131a;
+  color: #eaf2fb;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  outline: none;
+}
+
+.roadmap-feedback-form textarea {
+  min-height: 96px;
+  padding: 11px 12px;
+  resize: vertical;
+}
+
+.roadmap-feedback-form input {
+  height: 36px;
+  padding: 0 12px;
+}
+
+.roadmap-feedback-form textarea:focus,
+.roadmap-feedback-form input:focus {
+  border-color: rgba(120, 195, 255, 0.86);
+  box-shadow: 0 0 0 2px rgba(71, 168, 255, 0.16);
+}
+
+.roadmap-feedback-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.roadmap-feedback-status {
+  min-height: 14px;
+  color: #8f9baa;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.roadmap-feedback-status.success {
+  color: #58d7a0;
+}
+
+.roadmap-feedback-status.error {
+  color: #ff8a8a;
+}
+
+.roadmap-modal-footer .roadmap-feedback-submit {
+  background: #1678d2;
+  color: #f8fbff;
+}
+
+.roadmap-modal-footer .roadmap-feedback-submit:hover {
+  background: #248dea;
+  color: #ffffff;
+}
+
+.roadmap-modal-footer .roadmap-feedback-submit:disabled {
+  background: #344150;
+  color: #7f8b98;
+  cursor: not-allowed;
 }
 
 @media (min-width: 960px) {

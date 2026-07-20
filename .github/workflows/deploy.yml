@@ -25,6 +25,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run docs:build
+        env:
+          VITE_ROADMAP_FEEDBACK_ENDPOINT: ${{ secrets.ROADMAP_FEEDBACK_ENDPOINT }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: docs/.vitepress/dist
