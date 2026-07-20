@@ -27,11 +27,12 @@ const cards: RoadmapCard[] = [
     description: 'Optional brush type support so projects can let players paint with different brush masks instead of only the default round brush. The feature can be enabled when a game wants selectable shapes such as round, star, scatter, square, soft, or splash.'
   },
   {
-    title: 'Sample Project',
+    title: 'Texture Painting',
     imageTone: 'orange',
-    imageLabel: 'Example Level',
+    imageLabel: 'Texture Brush',
+    imageSrc: '/roadmap/texture-painting.png',
     posted: 'Forward looking',
-    description: 'A minimal Unreal sample scene with a configured paint target, material setup, input mapping, and runtime paint controller.'
+    description: 'Texture painting support so projects can paint with selected texture masks or surface patterns instead of only flat color. This would let players apply details such as metal plates, fabric, dirt, decals, camouflage, or custom brush textures directly onto runtime paint targets.'
   },
   {
     title: 'Material Examples',
