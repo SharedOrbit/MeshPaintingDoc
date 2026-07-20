@@ -48,7 +48,6 @@ const importanceLabels = ['NOT IMPORTANT', 'NICE-TO-HAVE', 'IMPORTANT', 'CRITICA
 const activeFeature = ref<ActiveRoadmapCard | null>(null)
 const selectedImportance = ref('')
 const feedbackMessage = ref('')
-const feedbackContact = ref('')
 const feedbackStatus = ref<'idle' | 'success' | 'error'>('idle')
 const feedbackStatusMessage = ref('')
 const isSubmittingFeedback = ref(false)
@@ -57,7 +56,6 @@ const feedbackEndpoint = 'https://script.google.com/macros/s/AKfycbxvP0IHYQYR42O
 function resetFeedbackForm() {
   selectedImportance.value = ''
   feedbackMessage.value = ''
-  feedbackContact.value = ''
   feedbackStatus.value = 'idle'
   feedbackStatusMessage.value = ''
   isSubmittingFeedback.value = false
@@ -96,13 +94,11 @@ async function submitFeedback() {
         feature: activeFeature.value.card.title,
         importance: selectedImportance.value,
         message: feedbackMessage.value.trim(),
-        contact: feedbackContact.value.trim(),
         page: typeof window !== 'undefined' ? window.location.href : '/roadmap'
       })
     })
 
     feedbackMessage.value = ''
-    feedbackContact.value = ''
     feedbackStatus.value = 'success'
     feedbackStatusMessage.value = 'Feedback sent.'
   } catch {
@@ -220,12 +216,6 @@ onUnmounted(() => {
                 rows="4"
                 placeholder="Tell us what should be improved or why this matters."
               />
-              <input
-                v-model="feedbackContact"
-                maxlength="120"
-                placeholder="Discord or email (optional)"
-                type="text"
-              >
               <div class="roadmap-feedback-actions">
                 <span
                   class="roadmap-feedback-status"

@@ -742,8 +742,7 @@ body:has(._MeshPaintingDoc_roadmap) {
   font-weight: 900;
 }
 
-.roadmap-feedback-form textarea,
-.roadmap-feedback-form input {
+.roadmap-feedback-form textarea {
   width: 100%;
   border: 1px solid rgba(73, 92, 112, 0.78);
   border-radius: 5px;
@@ -761,13 +760,7 @@ body:has(._MeshPaintingDoc_roadmap) {
   resize: vertical;
 }
 
-.roadmap-feedback-form input {
-  height: 36px;
-  padding: 0 12px;
-}
-
-.roadmap-feedback-form textarea:focus,
-.roadmap-feedback-form input:focus {
+.roadmap-feedback-form textarea:focus {
   border-color: rgba(120, 195, 255, 0.86);
   box-shadow: 0 0 0 2px rgba(71, 168, 255, 0.16);
 }
