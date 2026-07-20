@@ -7,7 +7,7 @@ export default defineConfig({
   lang: 'en-US',
   cleanUrls: true,
   lastUpdated: true,
-  appearance: 'dark',
+  appearance: false,
 
   head: [
     ['link', { rel: 'icon', href: '/MeshPaintingDoc/icon.png' }],
