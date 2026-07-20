@@ -41,55 +41,6 @@ const cards: RoadmapCard[] = [
     imageSrc: '/roadmap/feedback-updates.png',
     posted: 'Forward looking',
     description: 'Ongoing improvements based on user feedback, reported issues, and practical production needs. Confirmed bugs will be prioritized for fixes, while useful workflow suggestions can shape future runtime painting features and documentation updates.'
-  },
-  {
-    title: 'Material Examples',
-    imageTone: 'gray',
-    imageLabel: 'Material Graph',
-    posted: 'Forward looking',
-    description: 'Extra material examples for color-only painting, material setting painting, opacity blending, and packed metallic/roughness workflows.'
-  },
-  {
-    title: 'Brush Presets',
-    imageTone: 'blue',
-    imageLabel: 'Brush Presets',
-    posted: 'Forward looking',
-    description: 'Reusable brush presets for size, opacity, hardness, material settings, and eraser behavior.'
-  },
-  {
-    title: 'Advanced Multiplayer Notes',
-    imageTone: 'green',
-    imageLabel: 'Replication Flow',
-    posted: 'Forward looking',
-    description: 'More examples for listen server, dedicated server, late join replay, and low bandwidth paint command replication.'
-  },
-  {
-    title: 'Packaging Checklist',
-    imageTone: 'gray',
-    imageLabel: 'Shipping Build',
-    posted: 'Forward looking',
-    description: 'A focused checklist for plugin content, shader loading, supported platforms, and packaged build validation.'
-  },
-  {
-    title: 'More Brush Shapes',
-    imageTone: 'orange',
-    imageLabel: 'Brush Masks',
-    posted: 'Forward looking',
-    description: 'Investigating additional brush masks and falloff styles without changing the current runtime GPU paint path.'
-  },
-  {
-    title: 'Extra Platform Testing',
-    imageTone: 'gray',
-    imageLabel: 'Platform Testing',
-    posted: 'Forward looking',
-    description: 'Windows is the current tested target. Other platforms should only be listed after shader, render target, and packaging validation.'
-  },
-  {
-    title: 'Editor Utility Helpers',
-    imageTone: 'blue',
-    imageLabel: 'Editor Helpers',
-    posted: 'Forward looking',
-    description: 'Possible optional editor helpers for preparing materials and checking paint target setup before runtime.'
   }
 ]
 
