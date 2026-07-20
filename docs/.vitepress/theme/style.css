@@ -374,7 +374,7 @@ body {
 }
 
 .roadmap-tabs a {
-  flex: 1 0 166px;
+  flex: 0 0 220px;
   padding: 16px 16px 14px;
   border-bottom: 3px solid transparent;
   color: #7f8b98;
@@ -394,27 +394,6 @@ body {
 
 .roadmap-section {
   margin-top: 48px;
-}
-
-.roadmap-section-title {
-  display: grid;
-  grid-template-columns: minmax(24px, 1fr) auto minmax(24px, 1fr);
-  gap: 18px;
-  align-items: center;
-  margin: 0 0 26px;
-  padding: 0;
-  border: 0;
-  color: #9ea8b4;
-  font-size: 15px;
-  font-weight: 900;
-  text-align: center;
-}
-
-.roadmap-section-title::before,
-.roadmap-section-title::after {
-  height: 1px;
-  content: "";
-  background: rgba(73, 92, 112, 0.88);
 }
 
 .roadmap-grid {

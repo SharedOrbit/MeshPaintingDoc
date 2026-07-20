@@ -13,145 +13,82 @@ type RoadmapCard = {
   posted?: string
 }
 
-type RoadmapSection = {
-  id: string
-  title: string
-  cards: RoadmapCard[]
-}
-
 type ActiveRoadmapCard = {
-  sectionTitle: string
   card: RoadmapCard
 }
 
-const tabs = [
-  'MESH PAINTING 1.4',
-  'MESH PAINTING 1.3',
-  'MESH PAINTING 1.2',
-  'MESH PAINTING 1.1',
-  'MESH PAINTING 1.0'
-]
-
-const sections: RoadmapSection[] = [
+const cards: RoadmapCard[] = [
   {
-    id: 'next-update',
-    title: 'Next Update',
-    cards: [
-      {
-        title: 'Brush Types',
-        imageTone: 'blue',
-        imageLabel: 'Round / Star / Scatter',
-        imageSrc: '/roadmap/brush-types.png',
-        posted: 'Planned for a future update',
-        description: 'Optional brush type support so projects can let players paint with different brush masks instead of only the default round brush. The feature can be enabled when a game wants selectable shapes such as round, star, scatter, square, soft, or splash.'
-      },
-      {
-        title: 'Sample Project',
-        imageTone: 'orange',
-        imageLabel: 'Example Level',
-        posted: 'Posted on July 2026',
-        description: 'A minimal Unreal sample scene with a configured paint target, material setup, input mapping, and runtime paint controller.'
-      },
-      {
-        title: 'Material Examples',
-        imageTone: 'gray',
-        imageLabel: 'Material Graph',
-        posted: 'Posted on July 2026',
-        description: 'Extra material examples for color-only painting, material setting painting, opacity blending, and packed metallic/roughness workflows.'
-      }
-    ]
+    title: 'Brush Types',
+    imageTone: 'blue',
+    imageLabel: 'Round / Star / Scatter',
+    imageSrc: '/roadmap/brush-types.png',
+    posted: 'Forward looking',
+    description: 'Optional brush type support so projects can let players paint with different brush masks instead of only the default round brush. The feature can be enabled when a game wants selectable shapes such as round, star, scatter, square, soft, or splash.'
   },
   {
-    id: 'planned',
-    title: 'Planned',
-    cards: [
-      {
-        title: 'Brush Presets',
-        imageTone: 'blue',
-        imageLabel: 'Brush Presets',
-        posted: 'Planned for a future update',
-        description: 'Reusable brush presets for size, opacity, hardness, material settings, and eraser behavior.'
-      },
-      {
-        title: 'Advanced Multiplayer Notes',
-        imageTone: 'green',
-        imageLabel: 'Replication Flow',
-        posted: 'Planned for a future update',
-        description: 'More examples for listen server, dedicated server, late join replay, and low bandwidth paint command replication.'
-      },
-      {
-        title: 'Packaging Checklist',
-        imageTone: 'gray',
-        imageLabel: 'Shipping Build',
-        posted: 'Planned for a future update',
-        description: 'A focused checklist for plugin content, shader loading, supported platforms, and packaged build validation.'
-      }
-    ]
+    title: 'Sample Project',
+    imageTone: 'orange',
+    imageLabel: 'Example Level',
+    posted: 'Forward looking',
+    description: 'A minimal Unreal sample scene with a configured paint target, material setup, input mapping, and runtime paint controller.'
   },
   {
-    id: 'research',
-    title: 'Research',
-    cards: [
-      {
-        title: 'More Brush Shapes',
-        imageTone: 'orange',
-        imageLabel: 'Brush Masks',
-        posted: 'Research item',
-        description: 'Investigating additional brush masks and falloff styles without changing the current runtime GPU paint path.'
-      },
-      {
-        title: 'Extra Platform Testing',
-        imageTone: 'gray',
-        imageLabel: 'Platform Testing',
-        posted: 'Research item',
-        description: 'Windows is the current tested target. Other platforms should only be listed after shader, render target, and packaging validation.'
-      },
-      {
-        title: 'Editor Utility Helpers',
-        imageTone: 'blue',
-        imageLabel: 'Editor Helpers',
-        posted: 'Research item',
-        description: 'Possible optional editor helpers for preparing materials and checking paint target setup before runtime.'
-      }
-    ]
+    title: 'Material Examples',
+    imageTone: 'gray',
+    imageLabel: 'Material Graph',
+    posted: 'Forward looking',
+    description: 'Extra material examples for color-only painting, material setting painting, opacity blending, and packed metallic/roughness workflows.'
   },
   {
-    id: 'completed',
-    title: 'Completed',
-    cards: [
-      {
-        title: 'Runtime GPU Painting',
-        imageTone: 'blue',
-        imageLabel: 'GPU Painting',
-        completed: true,
-        posted: 'Completed',
-        description: 'Brush painting is applied through a runtime GPU path using persistent render targets.'
-      },
-      {
-        title: 'UV Island Clipping',
-        imageTone: 'green',
-        imageLabel: 'UV Island Clip',
-        completed: true,
-        posted: 'Completed',
-        description: 'Large brushes are clipped to the valid painted surface so unrelated UV islands are protected.'
-      },
-      {
-        title: 'Late Join Multiplayer',
-        imageTone: 'orange',
-        imageLabel: 'Late Join Replay',
-        completed: true,
-        posted: 'Completed',
-        description: 'Paint command history is replayed for late join clients instead of replicating raw render target textures.'
-      }
-    ]
+    title: 'Brush Presets',
+    imageTone: 'blue',
+    imageLabel: 'Brush Presets',
+    posted: 'Forward looking',
+    description: 'Reusable brush presets for size, opacity, hardness, material settings, and eraser behavior.'
+  },
+  {
+    title: 'Advanced Multiplayer Notes',
+    imageTone: 'green',
+    imageLabel: 'Replication Flow',
+    posted: 'Forward looking',
+    description: 'More examples for listen server, dedicated server, late join replay, and low bandwidth paint command replication.'
+  },
+  {
+    title: 'Packaging Checklist',
+    imageTone: 'gray',
+    imageLabel: 'Shipping Build',
+    posted: 'Forward looking',
+    description: 'A focused checklist for plugin content, shader loading, supported platforms, and packaged build validation.'
+  },
+  {
+    title: 'More Brush Shapes',
+    imageTone: 'orange',
+    imageLabel: 'Brush Masks',
+    posted: 'Forward looking',
+    description: 'Investigating additional brush masks and falloff styles without changing the current runtime GPU paint path.'
+  },
+  {
+    title: 'Extra Platform Testing',
+    imageTone: 'gray',
+    imageLabel: 'Platform Testing',
+    posted: 'Forward looking',
+    description: 'Windows is the current tested target. Other platforms should only be listed after shader, render target, and packaging validation.'
+  },
+  {
+    title: 'Editor Utility Helpers',
+    imageTone: 'blue',
+    imageLabel: 'Editor Helpers',
+    posted: 'Forward looking',
+    description: 'Possible optional editor helpers for preparing materials and checking paint target setup before runtime.'
   }
 ]
 
 const importanceLabels = ['NOT IMPORTANT', 'NICE-TO-HAVE', 'IMPORTANT', 'CRITICAL']
 const activeFeature = ref<ActiveRoadmapCard | null>(null)
 
-function openCard(card: RoadmapCard, sectionTitle: string) {
-  activeFeature.value = { card, sectionTitle }
+function openCard(card: RoadmapCard) {
+  activeFeature.value = { card }
 }
 
 function closeCard() {
@@ -176,30 +113,17 @@ onUnmounted(() => {
 <template>
   <div class="roadmap-page">
     <nav class="roadmap-tabs" aria-label="Roadmap versions">
-      <a
-        v-for="(tab, index) in tabs"
-        :key="tab"
-        :class="{ active: index === 1 }"
-        href="#next-update"
-      >
-        {{ tab }}
-      </a>
+      <a class="active" href="#forward-looking">Forward Looking</a>
     </nav>
 
-    <section
-      v-for="section in sections"
-      :id="section.id"
-      :key="section.id"
-      class="roadmap-section"
-    >
-      <div class="roadmap-section-title">{{ section.title }}</div>
+    <section id="forward-looking" class="roadmap-section">
       <div class="roadmap-grid">
         <button
-          v-for="card in section.cards"
+          v-for="card in cards"
           :key="card.title"
           type="button"
           class="roadmap-card"
-          @click="openCard(card, section.title)"
+          @click="openCard(card)"
         >
           <span class="roadmap-card-title">{{ card.title }}</span>
           <span
@@ -246,7 +170,6 @@ onUnmounted(() => {
             <span v-else class="roadmap-modal-image-label">{{ activeFeature.card.imageLabel || activeFeature.card.title }}</span>
           </div>
           <div class="roadmap-modal-body">
-            <p class="roadmap-modal-section">{{ activeFeature.sectionTitle }}</p>
             <h2 id="roadmap-modal-title">{{ activeFeature.card.title }}</h2>
             <div class="roadmap-modal-meta">
               <span class="roadmap-modal-avatar">SO</span>
