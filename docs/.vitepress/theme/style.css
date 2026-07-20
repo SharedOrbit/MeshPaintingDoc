@@ -394,13 +394,13 @@ body {
 }
 
 .roadmap-section {
-  margin: 48px calc(50% - 50vw) 0;
-  padding: 0 max(24px, calc((100vw - 1680px) / 2));
+  margin: 48px 0 0;
+  padding: 0;
 }
 
 .roadmap-grid {
   display: grid;
-  max-width: 1360px;
+  width: min(1360px, calc(100vw - var(--vp-sidebar-width) - 96px));
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
 }
@@ -726,6 +726,13 @@ body {
   background: #090d12 !important;
 }
 
+@media (max-width: 960px) {
+  .roadmap-grid {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 768px) {
   .VPHero {
     padding-top: 56px !important;
@@ -744,6 +751,7 @@ body {
   }
 
   .roadmap-grid {
+    width: 100%;
     grid-template-columns: 1fr;
   }
 }
