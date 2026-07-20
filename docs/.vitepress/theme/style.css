@@ -331,6 +331,179 @@ body {
   border-color: rgba(73, 92, 112, 0.86);
 }
 
+.VPDoc:has(._MeshPaintingDoc_roadmap) .content-container {
+  max-width: 1280px;
+}
+
+.VPDoc:has(._MeshPaintingDoc_roadmap) .aside {
+  display: none;
+}
+
+.VPDoc:has(._MeshPaintingDoc_roadmap) .content {
+  padding-right: 32px;
+}
+
+._MeshPaintingDoc_roadmap > div > h1 {
+  margin-bottom: 10px;
+  border-bottom: 0;
+}
+
+.roadmap-page {
+  margin-top: 28px;
+}
+
+.roadmap-tabs {
+  position: sticky;
+  top: 64px;
+  z-index: 5;
+  display: flex;
+  gap: 0;
+  margin: 0 0 34px;
+  border-bottom: 1px solid rgba(73, 92, 112, 0.88);
+  background: rgba(11, 15, 20, 0.96);
+  overflow-x: auto;
+}
+
+.roadmap-tabs a {
+  flex: 1 0 150px;
+  padding: 14px 18px 12px;
+  border-bottom: 3px solid transparent;
+  color: #aebccd;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+.roadmap-tabs a:hover {
+  border-bottom-color: #47a8ff;
+  color: #78c3ff;
+}
+
+.roadmap-section {
+  margin-top: 38px;
+}
+
+.roadmap-section-title {
+  display: grid;
+  grid-template-columns: minmax(24px, 1fr) auto minmax(24px, 1fr);
+  gap: 18px;
+  align-items: center;
+  margin: 0 0 22px;
+  padding: 0;
+  border: 0;
+  color: #cfd9e6;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.roadmap-section-title::before,
+.roadmap-section-title::after {
+  height: 1px;
+  content: "";
+  background: rgba(73, 92, 112, 0.88);
+}
+
+.roadmap-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.roadmap-card {
+  min-height: 156px;
+  border: 1px solid rgba(73, 92, 112, 0.76);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(21, 29, 39, 0.98), rgba(13, 18, 24, 0.98));
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.24);
+  overflow: hidden;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
+}
+
+.roadmap-card:hover,
+.roadmap-card[open] {
+  border-color: rgba(120, 195, 255, 0.78);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.32),
+    0 0 0 1px rgba(120, 195, 255, 0.12);
+}
+
+.roadmap-card:hover {
+  transform: translateY(-2px);
+}
+
+.roadmap-card summary {
+  position: relative;
+  display: flex;
+  min-height: 96px;
+  padding: 22px 48px 20px 22px;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.roadmap-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.roadmap-card summary::after {
+  position: absolute;
+  right: 22px;
+  top: 26px;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid #78c3ff;
+  border-bottom: 2px solid #78c3ff;
+  content: "";
+  transform: rotate(45deg);
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.roadmap-card[open] summary::after {
+  border-color: #ffd38a;
+  transform: translateY(4px) rotate(225deg);
+}
+
+.roadmap-card-title {
+  color: #eef4fb;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.roadmap-card-status {
+  width: fit-content;
+  padding: 4px 8px;
+  border: 1px solid rgba(120, 195, 255, 0.34);
+  border-radius: 4px;
+  background: rgba(71, 168, 255, 0.12);
+  color: #9bd4ff;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.roadmap-card-status.completed {
+  border-color: rgba(56, 189, 148, 0.36);
+  background: rgba(56, 189, 148, 0.12);
+  color: #8ff3d1;
+}
+
+.roadmap-card p {
+  margin: 0;
+  padding: 0 22px 22px;
+  color: #b7c5d4;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
 .DocSearch-Button {
   border: 1px solid rgba(73, 92, 112, 0.78);
   border-radius: 6px;
@@ -354,5 +527,17 @@ body {
 
   .VPHome .image-src {
     width: min(180px, 48vw);
+  }
+
+  .VPDoc:has(._MeshPaintingDoc_roadmap) .content {
+    padding-right: 24px;
+  }
+
+  .roadmap-tabs {
+    top: 48px;
+  }
+
+  .roadmap-grid {
+    grid-template-columns: 1fr;
   }
 }
