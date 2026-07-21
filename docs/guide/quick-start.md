@@ -60,10 +60,35 @@ You can leave `PaintTargetComponents` empty on the controller. In that case, the
 
 If you fill `PaintTargetComponents`, painting is limited to only the target components in that list.
 
-## 9. Enter Paint Mode
+## 9. Enter Paint Mode and Controls
 
-Start paint mode with your configured input or by calling `EnterPaintingMode`.
+Start paint mode with the default toggle input or by calling `EnterPaintingMode`.
 
-When setup is correct, the color picker opens, the brush preview follows the mesh surface, and left mouse painting applies color to the runtime paint texture.
+The controller includes a `Control Mode` option:
+
+- `Character Lock` locks the normal character look input while paint mode is active and uses the plugin's painting camera controls.
+- `Simple` keeps the setup lighter for custom pawns, drone-style cameras, or cases where you do not want character movement handling from the plugin.
+- `None` disables the plugin input handling. Use it only when you want to drive painting manually from your own Blueprint or C++ code.
+
+![Painting controller control mode](/quick-start/08-control-mode.png)
+
+If `bLoadDefaultInputAssets` is enabled, the component loads the plugin's ready-to-use input assets:
+
+- `/RuntimeMeshPainting/Input/IMC_PaintingMode`
+- `/RuntimeMeshPainting/Input/IMC_PaintingModeToggle`
+
+Default quick controls:
+
+- `P` toggles paint mode. If `bAutoCreateColorPickerWidget` is enabled, the color picker menu opens when paint mode starts.
+- `Left Mouse` paints under the cursor.
+- `Space` picks the color under the cursor.
+- `Middle Mouse + Drag` orbits the painting camera.
+- `Shift + Middle Mouse + Drag` pans the painting camera.
+- `Right Mouse + Drag` adjusts brush size.
+- `Ctrl + Mouse Wheel` adjusts brush size.
+- `Mouse Wheel` zooms the camera in `Character Lock`.
+- `W/A/S/D` moves the character in `Character Lock`.
+
+When setup is correct, the color picker opens, the brush preview follows the mesh surface, and painting applies color to the runtime paint texture.
 
 That's all you need for a basic runtime paint test. If your project needs multiplayer, custom materials, input changes, or advanced brush behavior, continue with the other documentation pages.
