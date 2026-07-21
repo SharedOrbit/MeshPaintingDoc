@@ -40,14 +40,9 @@ If the trace does not hit the mesh, the brush preview cannot lock onto the surfa
 
 ## 6. Set Up the Mesh Material
 
-Open the mesh material and connect the plugin's `Mesh Painting` material function to your material output.
+Open the mesh material and set up the `Mesh Painting` material function correctly.
 
-At minimum, your material should use the runtime paint textures provided by the target component:
-
-- `PaintedColorTexture`
-- `PaintedMaterialSettingsTexture`
-
-For the full material graph setup, see [Material Setup](/guide/material-setup).
+For more information about the material setup, see [Material Setup](/guide/material-setup).
 
 ![Mesh Painting material function connected to a material](/quick-start/06-material-function.png)
 
