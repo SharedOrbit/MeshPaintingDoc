@@ -126,6 +126,29 @@ The widget section controls the automatic runtime color picker. The cursor secti
 
 When color picking is active or the cursor is over the color picker panel, painting and brush preview are blocked so UI interaction does not accidentally paint the mesh.
 
+### Custom Brush Cursor Texture
+
+You can replace `Brush Cursor Texture` with your own `Texture2D`, but the texture must be readable by the runtime cursor builder.
+
+Requirements for a custom cursor texture:
+
+- Use a normal `Texture2D` asset.
+- Enable `CPU Copy` on the texture asset so the cursor pixels can be read in packaged builds.
+- Keep the background transparent.
+- Keep the texture small and readable as a cursor, usually `64x64` or `128x128`.
+- Set `Brush Cursor Hot Spot` to the point that should touch the painted surface.
+
+The cursor color is generated from the current `Brush Color`. The system does not use a separate mask texture. Instead, it treats visible, saturated, colored pixels in the cursor texture as the replaceable accent area.
+
+For best results:
+
+- Make only the brush tip or paint area strongly colored.
+- Keep the handle and outline grayscale, white, black, or low saturation if they should not change color.
+- Do not make the tintable tip too dark, because the source brightness is preserved when the brush color is applied.
+- Use alpha for clean cursor edges; nearly transparent pixels are ignored by the tint step.
+
+The default `T_Brush` texture is already prepared this way: the painted tip is the dynamic color area, while the rest of the cursor stays stable.
+
 ![Runtime color picker](/painting-controller/10-runtime-color-picker.png)
 
 ## Brush Area Preview
