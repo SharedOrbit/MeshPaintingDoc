@@ -29,7 +29,7 @@ export default defineConfig({
       { text: 'Roadmap', link: '/roadmap' },
       { text: 'Demo', link: '/demo' },
       { text: 'Multiplayer', link: '/systems/multiplayer' },
-      { text: 'About', link: '/about' },
+      { text: 'Troubleshooting', link: '/reference/troubleshooting' },
       { text: 'Contact', link: '/contact' }
     ],
 
@@ -39,7 +39,7 @@ export default defineConfig({
         items: [
           { text: 'Roadmap', link: '/roadmap' },
           { text: 'Demo', link: '/demo' },
-          { text: 'About', link: '/about' },
+          { text: 'Troubleshooting', link: '/reference/troubleshooting' },
           { text: 'Contact', link: '/contact' }
         ]
       },
@@ -56,17 +56,7 @@ export default defineConfig({
           { text: 'Paint Target', link: '/systems/paint-target' },
           { text: 'Painting Controller', link: '/systems/painting-controller' },
           { text: 'Color Picker', link: '/systems/color-picker' },
-          { text: 'Multiplayer', link: '/systems/multiplayer' },
-          { text: 'Packaging', link: '/systems/packaging' }
-        ]
-      },
-      {
-        text: 'Reference',
-        items: [
-          { text: 'Blueprint API', link: '/api/blueprint' },
-          { text: 'Troubleshooting', link: '/reference/troubleshooting' },
-          { text: 'Changelog', link: '/reference/changelog' },
-          { text: 'Support', link: '/support' }
+          { text: 'Multiplayer', link: '/systems/multiplayer' }
         ]
       }
     ],
