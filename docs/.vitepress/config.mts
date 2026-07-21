@@ -46,8 +46,6 @@ export default defineConfig({
       {
         text: 'Getting Started',
         items: [
-          { text: 'Overview', link: '/guide/overview' },
-          { text: 'Installation', link: '/guide/installation' },
           { text: 'Quick Start', link: '/guide/quick-start' },
           { text: 'Material Setup', link: '/guide/material-setup' }
         ]
