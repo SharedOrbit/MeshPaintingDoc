@@ -1,84 +1,120 @@
 # Multiplayer
 
-Runtime Mesh Painting uses command replication instead of texture replication.
+Runtime Mesh Painting replicates paint commands, not render target textures.
 
-This keeps network traffic small and lets each client reproduce the same paint result locally through the GPU paint path.
+Each client receives the accepted paint commands and applies them locally through the same GPU paint path. This keeps bandwidth low and also lets late-joining players rebuild the painted state from history.
 
-## Core Idea
+## Multiplayer Quick Start
 
-The server does not replicate render target pixels.
+### 1. Set Up the Paintable Mesh
 
-Instead, each paint action is represented by a compact command:
+Set up the mesh the same way as the normal [Quick Start](/guide/quick-start):
 
-- Target component
-- Mesh target index
-- LOD
-- UV channel
-- Command id
-- Stroke id
-- Brush ray
-- Brush center
-- Brush normal
-- Brush size
-- Color
-- Opacity
-- Hardness
-- Metallic and roughness
-- Erase flag
-- Material settings write flag
+- Add `RuntimeMeshPaintTargetComponent` to the mesh actor.
+- Set up the mesh material with the `Mesh Painting` material function.
+- Make sure the mesh blocks the painting trace channel, usually `Visibility`.
+- Make sure the material `UV Index` matches the target component `UVChannel`.
 
-## Live Paint Flow
+### 2. Enable Runtime Paint Replication
 
-```text
-Local input
--> Build paint command
--> Apply local GPU prediction
--> Send command batch to server
--> Server validates command
--> Server adds command to authoritative history
--> Other clients receive the command
--> Each client applies the command locally
-```
+On `RuntimeMeshPaintTargetComponent`, keep `Replicate Runtime Paint` enabled.
 
-## Why Commands Instead of Textures
+The default values are enough for a first multiplayer test:
 
-Texture replication is expensive and does not scale well with low bandwidth.
+- `Replicate Runtime Paint` enables command replication for this paint target.
+- `Auto Enable Owner Replication` allows the component to enable replication on the owner actor at runtime.
+- `Max Replicated Paint Commands = 0` keeps the full command history, which is the safest setting for late join.
+- `Replicated Paint Replay Commands Per Tick` controls how many stored commands a joining client replays per tick.
+- `Max Replicated Paint Distance = 0` disables distance validation.
+- `Max Replicated Brush Size` limits the largest brush size accepted by the server.
 
-Command replication is smaller because it sends the input needed to reproduce the paint stroke, not the full render target.
+![Runtime paint replication settings](/multiplayer/01-target-replication-settings.png)
 
-## Late Join
+### 3. Make Sure the Target Actor Replicates
 
-Late join clients receive the replicated command history.
+The actor that owns the paint target should replicate. `Auto Enable Owner Replication` can handle this on authority, but it is still a good idea to verify the actor's replication settings while setting up the level.
 
-The client initializes an empty paint target, then replays accepted commands over multiple ticks:
+![Actor replication settings](/multiplayer/02-actor-replication.png)
 
-```text
-Join game
--> Initialize paint render targets
--> Receive command history
--> Queue replay
--> Apply commands with a frame budget
-```
+### 4. Add the Painting Controller
 
-## Dedicated Server
+Add `PaintingModeControllerComponent` to the player pawn, character, or player-owned controller that handles painting input.
+
+This is important because client-to-server paint RPCs must come from an owned actor/component. The paint target in the world may not be owned by the painting client, so the controller component is the correct entry point for multiplayer painting.
+
+![Painting controller component](/multiplayer/03-controller-component.png)
+
+### 5. Optional: Limit Which Targets the Controller Can Paint
+
+You do not need to assign a target filter for a basic multiplayer test.
+
+If no filter is configured, the controller can paint any valid `RuntimeMeshPaintTargetComponent` it hits.
+
+If you want to limit painting to specific targets, set it from Blueprint or C++ using the controller functions such as `SetPaintTargetComponent`, `SetPaintTargetComponents`, or `AddPaintTargetComponent`.
+
+![Set Paint Target Component node](/multiplayer/04-set-paint-target-component.png)
+
+### 6. Test With Two Players
+
+In Play settings, start with two players and use a listen server setup for a simple local test.
+
+![PIE multiplayer settings](/multiplayer/05-pie-multiplayer-settings.png)
+
+Paint from one player and confirm that the same paint appears for the other player.
+
+![Live multiplayer paint replication result](/multiplayer/06-live-replication-result.png)
+
+### 7. Test Late Join
+
+After live replication works, test a player joining after paint already exists.
+
+For late join to work correctly, keep `Max Replicated Paint Commands` at `0` unless you have your own checkpoint or save system. A value of `0` keeps the full command history so a new client can rebuild the current paint state.
+
+## How It Works
+
+### Command Replication
+
+The plugin does not send render target pixels over the network.
+
+Instead, every accepted paint action is stored as a compact command containing the target, mesh target index, UV channel, stroke id, brush ray, brush center, brush normal, brush size, color, material settings, and erase flag.
+
+### Local Prediction
+
+When a local player paints, the controller applies the paint immediately on that client for responsive feedback.
+
+The same command is then sent to the server. When the server accepts it, other clients receive and apply the command locally. The original painting client skips duplicate application of its own predicted command.
+
+### Server Validation
+
+The server validates incoming commands before adding them to history.
+
+Validation checks include:
+
+- Runtime paint replication is enabled.
+- The command targets the correct component.
+- The command uses the same `UVChannel` as the target component.
+- The mesh target index is valid.
+- The brush size is within `Max Replicated Brush Size`.
+- The brush ray and normal are valid.
+- Optional distance validation passes when `Max Replicated Paint Distance` is greater than `0`.
+
+### Late Join Replay
+
+Late-joining clients initialize their local runtime render targets, receive the replicated command history, and replay the commands over multiple ticks.
+
+`Replicated Paint Replay Commands Per Tick` controls how quickly the history is replayed. Higher values catch up faster, while lower values reduce hitch risk when the history is large.
+
+### Dedicated Server Behavior
 
 Dedicated servers do not render paint textures.
 
-They only:
+They only receive paint commands, validate them, assign command ids, store the authoritative command history, and replicate that history to clients. The visible paint result is generated on clients and listen-server hosts.
 
-- Receive RPCs
-- Validate commands
-- Assign command ids
-- Store authoritative history
-- Replicate commands to clients
+## Common Mistakes
 
-The visual paint result is produced on clients and listen-server hosts.
-
-## Important Files
-
-```text
-RuntimeMeshPaintReplicationTypes.h
-RuntimeMeshPaintReplicationTypes.cpp
-PaintingModeControllerComponent.h/.cpp
-RuntimeMeshPaintTargetComponent.h/.cpp
-```
+- The paint target actor does not replicate.
+- `Replicate Runtime Paint` is disabled on the target component.
+- `Max Replicated Paint Commands` is set to a small value, then late join cannot rebuild older paint.
+- The material `UV Index` and target component `UVChannel` do not match.
+- The mesh does not block the painting trace channel.
+- The painting controller is not on a player-owned actor/component.
