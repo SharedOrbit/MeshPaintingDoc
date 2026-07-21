@@ -50,10 +50,13 @@ Fix:
 
 ## Brush Preview Appears, But Paint Does Not Apply
 
-This usually means the trace hit is visible, but the paint target or material path rejects the final paint.
+This usually means the trace hit is visible, but the material is not displaying the runtime paint result. The most common cause is that the mesh material does not have the `Mesh Painting` material function set up correctly.
 
 Check:
 
+- The mesh material uses the `Mesh Painting` material function.
+- The material function outputs are connected to the material output.
+- The material is assigned to the same mesh section you are hitting.
 - The cursor is not over the color picker UI.
 - Eyedropper mode is not active.
 - `Paint Brush Material` is valid or the default brush material is available.
@@ -61,7 +64,7 @@ Check:
 - The target render targets were created successfully.
 - The material texture parameter names are still at the expected defaults when using the plugin material function.
 
-If the brush preview follows the surface but no paint appears, the collision side is probably working. Focus on the target component, material function, UV channel, and material slots.
+If the brush preview follows the surface but no paint appears, the collision side is probably working. Check the material setup first, then the target component, UV channel, and material slots.
 
 ## Brush Preview Missing, Flickers, Or Disappears
 
