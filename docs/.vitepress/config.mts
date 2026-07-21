@@ -53,7 +53,7 @@ export default defineConfig({
       {
         text: 'Systems',
         items: [
-          { text: 'Paint Target Component', link: '/systems/paint-target' },
+          { text: 'Paint Target', link: '/systems/paint-target' },
           { text: 'Painting Controller', link: '/systems/painting-controller' },
           { text: 'Color Picker', link: '/systems/color-picker' },
           { text: 'Multiplayer', link: '/systems/multiplayer' },

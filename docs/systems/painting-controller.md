@@ -45,6 +45,21 @@ The controller can update:
 
 These settings are passed into the target component during paint.
 
+## Events
+
+`PaintingModeControllerComponent` exposes player-side events for paint mode, input state, orbit state, and brush size changes.
+
+| Event | When It Fires | Typical Use |
+| --- | --- | --- |
+| `OnPaintingModeEntered` | After `EnterPaintingMode` succeeds and the controller switches into painting mode. | Open custom UI, change HUD state, or enable paint-only gameplay logic. |
+| `OnPaintingModeExited` | After `ExitPaintingMode` restores the previous camera and input state. | Close custom UI, return HUD state, or stop paint-only effects. |
+| `OnPaintPressed` | When the paint input starts and the stroke begins. | Start stroke UI feedback or one-time effects for the beginning of a stroke. |
+| `OnPaintTriggered` | While the paint input is being triggered. This can fire repeatedly during a stroke. | Lightweight per-stroke feedback only. Avoid expensive Blueprint work here. |
+| `OnPaintReleased` | When painting stops and the current stroke is flushed. | End stroke UI feedback or commit local state after the stroke. |
+| `OnBrushSizeChanged` | After `SetBrushSize` changes the clamped brush size. | Update brush size sliders, labels, or preview UI. |
+| `OnOrbitStarted` | When orbit input starts in a mode where orbit is allowed. | Hide conflicting UI or show camera-control feedback. |
+| `OnOrbitStopped` | When orbit input ends. | Restore UI that was hidden during orbit. |
+
 ## Common Functions
 
 | Function | Use |

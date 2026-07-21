@@ -1,4 +1,4 @@
-# Paint Target Component
+# RuntimeMeshPaintTargetComponent
 
 `RuntimeMeshPaintTargetComponent` is the component that makes an actor paintable.
 
@@ -101,6 +101,21 @@ The replication settings are used when the paint target should work in multiplay
 | `Max Replicated Brush Size` | Maximum brush size accepted by the server. |
 
 For more details, see [Multiplayer](/systems/multiplayer).
+
+## Events
+
+The component exposes paint-specific Blueprint events in the `Runtime Mesh Painting | Events` category. Unreal also shows the standard Actor Component activation events in the same Details panel.
+
+![RuntimeMeshPaintTargetComponent events](/paint-target/04-events.png)
+
+| Event | When It Fires | Typical Use |
+| --- | --- | --- |
+| `OnBrushSettingsApplied` | After `ApplyBrushMaterialSettings` stores and clamps the new brush material settings on this target. | React when another system applies color, opacity, metallic, roughness, or erase settings directly to the target. |
+| `OnPaintApplied` | After a paint command is successfully applied to this target. This also fires when replicated paint commands are replayed locally. | Mark the mesh as dirty, update save state, trigger small effects, or refresh UI that depends on the latest painted result. |
+| `OnComponentActivated` | Inherited Unreal component event fired when the component is activated. | Use only for normal component activation logic, not for detecting a paint stroke. |
+| `OnComponentDeactivated` | Inherited Unreal component event fired when the component is deactivated. | Use only for normal component deactivation logic, not for paint completion. |
+
+Use `OnPaintApplied` when you need to know that actual painting happened. Changing brush color or settings by itself should not be treated as a paint event.
 
 ## Useful Blueprint Functions
 
