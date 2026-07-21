@@ -46,7 +46,7 @@ Common causes:
 
 ## Brush Preview Appears, But Paint Does Not Apply
 
-If the brush preview follows the surface, tracing is usually working. In this case, the problem is usually material setup or a broken paint UV layout.
+If the brush preview follows the surface, tracing is usually working. In this case, the most common cause is material setup.
 
 Check:
 
@@ -54,12 +54,9 @@ Check:
 - The function outputs are connected to `Base Color`, `Metallic`, and `Roughness` as needed.
 - The material is assigned to the mesh section you are painting.
 - The runtime paint texture parameter names are still compatible with the plugin material function.
-- The selected paint UV channel exists and is unwrapped correctly.
-- The paint UVs are inside the expected 0-1 space.
-- The UVs are not collapsed, zero-area, stacked unintentionally, or assigned to the wrong channel.
 - The target render targets were created successfully.
 
-Fix the material first, then inspect the model's paint UVs. If the model UVs are broken, the plugin cannot solve that in code. Runtime Mesh Painting can only paint through the UV data the model provides, so repairing invalid UVs is the responsibility of the asset/model setup.
+Fix the material first, then check the paint target and UV channel.
 
 ## Brush Preview Missing Or Flickering
 
@@ -79,17 +76,24 @@ For skeletal meshes, per-poly collision is not required, but the physics or coll
 
 ## Paint Appears In The Wrong Place
 
-Wrong-location paint is usually a UV mismatch.
+Wrong-location paint is usually a UV mismatch or a broken paint UV layout.
 
 Check:
 
 - `RuntimeMeshPaintTargetComponent.UVChannel` and material `UV Index` are the same.
 - The selected UV channel exists on the mesh.
+- The selected paint UV channel is unwrapped correctly.
+- The paint UVs are inside the expected 0-1 space.
+- The UVs are not collapsed, zero-area, stacked unintentionally, or assigned to the wrong channel.
 - The material is not using another `TextureCoordinate` path after the paint function.
 - LODs use compatible paint UV layouts.
 - The mesh does not rely on unusual negative or non-uniform scale.
 
 If changing `UVChannel` fixes the issue, the plugin was painting correctly but the material or asset was reading another UV channel.
+
+If the model UVs are broken, the plugin cannot solve that in code. Runtime Mesh Painting can only paint through the UV data the model provides, so repairing invalid UVs is the responsibility of the asset/model setup.
+
+If the paint appears on a mirrored or duplicated part of the model, also check [Mirrored Or Overlapped UVs](#mirrored-or-overlapped-uvs).
 
 ## UV Islands, Seams, And Large Brushes
 
