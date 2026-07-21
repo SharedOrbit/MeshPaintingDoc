@@ -1,280 +1,209 @@
 # Troubleshooting
 
-Use this page when painting behaves differently than expected.
+Runtime Mesh Painting writes paint into a render target through mesh UVs. Most issues come from one of these areas:
 
-Runtime Mesh Painting paints into a render target through mesh UVs. Because of that, many visible issues come from one of four places:
-
-- Target setup
+- Target component setup
 - Material setup
 - Collision or trace setup
-- The mesh UV layout itself
+- The mesh UV layout
 
-If the plugin works on a simple cube or a clean test mesh, but fails only on a production model, start by checking the model UVs, LODs, collision, and material slots before changing plugin settings.
+If the plugin works on a simple cube but fails on a production asset, treat it as an asset, UV, material slot, LOD, or collision issue first.
 
-## Fast Checklist
+## Start Here
 
-Check these first:
+Check these before changing advanced settings:
 
 - The actor has `RuntimeMeshPaintTargetComponent`.
+- The player has `PaintingModeControllerComponent`.
 - The mesh material uses the `Mesh Painting` material function.
-- The material `UV Index` matches `RuntimeMeshPaintTargetComponent.UVChannel`.
+- The material function outputs are connected to the material output.
+- Material `UV Index` matches `RuntimeMeshPaintTargetComponent.UVChannel`.
 - The mesh blocks the controller `Paint Trace Channel`, usually `Visibility`.
-- `PaintingModeControllerComponent` is added to the local player pawn, character, or controller.
-- `Control Mode` is not `None` unless you are driving painting manually.
-- If the actor has multiple mesh components, `Mesh Targets` contains the correct component names or is left empty intentionally.
-- If the controller has `Paint Target Components`, the target you are trying to paint is in that allow list.
-- `Clip Brush to UVIsland` is enabled unless you intentionally want paint to cross UV islands.
-- The paintable material is assigned to the mesh section you are actually hitting.
+- The correct mesh component and material section are being hit.
+- `Clip Brush to UVIsland` is enabled unless cross-island painting is intentional.
 
 ## Paint Does Not Appear At All
 
+If nothing appears, check the basic chain:
+
+```text
+Controller trace
+-> Paint target component
+-> Runtime render target
+-> Mesh Painting material function
+-> Material output
+```
+
 Common causes:
 
-- `RuntimeMeshPaintTargetComponent` is missing from the mesh actor.
-- The target was not initialized at runtime.
-- The mesh material does not use the `Mesh Painting` material function.
-- The material function output is not connected to the material output.
-- The material `UV Index` does not match the target component `UVChannel`.
-- The mesh does not block the painting trace channel.
-- The controller cannot find the target because `Paint Target Components` filters it out.
-- `Mesh Targets` points to a wrong component name.
-- The mesh uses a material slot that does not contain the paint function.
-
-Fix:
-
-1. Test the same setup on a simple mesh.
-2. Confirm the brush preview appears on the surface.
-3. Confirm the material uses the paint function.
-4. Confirm `UV Index` and `UVChannel` are the same value.
-5. Confirm the hit mesh component is the same component configured in `Mesh Targets`.
+- Missing or uninitialized `RuntimeMeshPaintTargetComponent`.
+- The controller target filter excludes the target.
+- `Mesh Targets` points to the wrong component.
+- The mesh material does not contain the `Mesh Painting` function.
+- The material slot you are hitting uses a different material.
+- `UVChannel` and material `UV Index` do not match.
+- The mesh does not block the paint trace channel.
 
 ## Brush Preview Appears, But Paint Does Not Apply
 
-This usually means the trace hit is visible, but the material is not displaying the runtime paint result. The most common cause is that the mesh material does not have the `Mesh Painting` material function set up correctly.
+If the brush preview follows the surface, tracing is usually working. In this case, the most common cause is material setup.
 
 Check:
 
 - The mesh material uses the `Mesh Painting` material function.
-- The material function outputs are connected to the material output.
-- The material is assigned to the same mesh section you are hitting.
+- The function outputs are connected to `Base Color`, `Metallic`, and `Roughness` as needed.
+- The material is assigned to the mesh section you are painting.
+- The runtime paint texture parameter names are still compatible with the plugin material function.
+- The target render targets were created successfully.
+
+Fix the material first, then check the paint target and UV channel.
+
+## Brush Preview Missing Or Flickering
+
+This is usually a trace, collision, or target filtering issue.
+
+Check:
+
+- The mesh blocks `Paint Trace Channel`.
+- `Paint Trace Complex` is enabled when simple collision is too rough.
+- Another object is not blocking the trace before the paintable mesh.
 - The cursor is not over the color picker UI.
 - Eyedropper mode is not active.
-- `Paint Brush Material` is valid or the default brush material is available.
-- The hit component belongs to a valid `RuntimeMeshPaintTargetComponent`.
-- The target render targets were created successfully.
-- The material texture parameter names are still at the expected defaults when using the plugin material function.
+- `Control Mode` is not `None` unless you drive painting manually.
+- The target is not excluded by `Paint Target Components`.
 
-If the brush preview follows the surface but no paint appears, the collision side is probably working. Check the material setup first, then the target component, UV channel, and material slots.
-
-## Brush Preview Missing, Flickers, Or Disappears
-
-Common causes:
-
-- The mesh does not block `Paint Trace Channel`.
-- `Paint Trace Complex` is disabled and the simple collision does not match the visual surface closely enough.
-- The controller is in `None` control mode.
-- The target is excluded by `Paint Target Components`.
-- The cursor is over the color picker UI.
-- Eyedropper mode is active.
-- The mesh collision is behind or far away from the visible mesh.
-- The camera ray is hitting another object before the paintable mesh.
-
-For skeletal meshes, per-poly collision is not required by the plugin, but the collision still needs to produce useful hits near the visible surface. If the physics asset is too rough or does not cover the painted area, the brush can appear to miss the mesh.
+For skeletal meshes, per-poly collision is not required, but the physics or collision setup still needs to produce hits near the visible surface.
 
 ## Paint Appears In The Wrong Place
 
-Most wrong-location paint issues come from UV mismatch.
+Wrong-location paint is usually a UV mismatch.
 
 Check:
 
-- `RuntimeMeshPaintTargetComponent.UVChannel` and material `UV Index` match.
+- `RuntimeMeshPaintTargetComponent.UVChannel` and material `UV Index` are the same.
 - The selected UV channel exists on the mesh.
-- The UV channel used for painting is the same UV channel used by the `Mesh Painting` material function.
-- The mesh LODs use compatible UV layouts.
-- The material is not using a different `TextureCoordinate` node after the paint function.
-- The mesh has applied scale and does not rely on unusual negative or non-uniform transform setup.
+- The material is not using another `TextureCoordinate` path after the paint function.
+- LODs use compatible paint UV layouts.
+- The mesh does not rely on unusual negative or non-uniform scale.
 
-If changing `UVChannel` fixes the issue, the original problem was not the brush. It was the material or mesh using a different UV channel than the paint target.
+If changing `UVChannel` fixes the issue, the plugin was painting correctly but the material or asset was reading another UV channel.
 
-## Large Brush Paints Unrelated Areas
+## UV Islands, Seams, And Large Brushes
 
-This can happen when the brush footprint in UV space reaches texels that belong to another part of the UV layout.
+Large brushes can reach outside the hit UV island in texture space. `Clip Brush to UVIsland` prevents unrelated UV islands from being painted.
 
-Check:
+Keep it enabled for:
 
-- `Clip Brush to UVIsland` is enabled.
-- The model does not have intentional UV overlap on the paint UV channel.
-- The model does not use mirrored UVs on the paint UV channel if independent painting is required.
-- UV islands are inside the 0-1 UV space.
-- Islands have enough gutter between them.
-- `UVIsland Connection Tolerance` has not been set too high.
-- The render target resolution is high enough for the island size.
+- Characters with many UV islands.
+- Cubes or hard-surface meshes with separated faces.
+- Large brush sizes.
+- Visible seam areas.
 
-Important: UV island clipping prevents large brushes from bleeding into unrelated islands. Do not disable it to hide a seam issue unless you accept the risk of painting unrelated UV islands.
+Visible seams usually happen because adjacent world-space surfaces are separate UV islands. The brush is clipped to the hit island, so the other side of the seam may need its own stroke.
 
-## Visible Seams Or Unpainted UV Cuts
+To reduce seam visibility:
 
-Visible seams usually come from the mesh UV layout, not from the paint color itself.
+- Use a dedicated paint UV channel with cleaner island placement.
+- Give islands enough padding.
+- Increase render target resolution when islands are too small.
+- Keep seams away from highly visible areas when possible.
+- Paint across both sides of the seam when the UVs are split.
 
-Common causes:
-
-- Two adjacent world-space surfaces are separate UV islands.
-- The brush is clipped to the hit UV island, so the other side of the seam is not painted by the same dab.
-- The paint UV has very small gutters.
-- The render target resolution is too low for the island size.
-- The material uses mipmaps or filtering that exposes unpainted neighboring texels.
-- The seam is placed in a highly visible area of the model.
-
-Fix:
-
-- Paint both sides of the seam by moving the brush across the seam.
-- Use a dedicated paint UV channel with better island placement.
-- Increase the render target resolution for high-detail assets.
-- Give UV islands enough padding.
-- Place paint UV seams in less visible areas when possible.
-
-If you need a brush stroke to flow perfectly across a UV seam, the paint UVs need to support that. A UV-space painting system cannot make two separated UV islands behave exactly like one continuous island unless both islands receive paint.
+A UV-space paint system cannot make two separated UV islands behave exactly like one continuous surface unless both islands receive paint.
 
 ## Mirrored Or Overlapped UVs
 
-Mirrored and overlapped UVs are not automatically broken, but they have a very specific meaning for runtime painting.
+Mirrored and overlapped UVs are valid only when shared paint is acceptable.
 
-If two mesh surfaces share the same UV texels, they share the same paint pixels.
+If two surfaces share the same UV texels, they share the same paint pixels:
 
-That means:
+- Painting one side can paint the mirrored side.
+- Erasing one side can erase the other.
+- Both surfaces can sample the same color.
+- They cannot be painted independently on that UV channel.
 
-- Painting one side can also paint the mirrored side.
-- The color picker can sample the same paint color from both surfaces.
-- Erasing one overlapped surface can erase the other.
-- It is not possible to paint those two surfaces independently on the same paint UV channel.
+This is expected for UV-space painting. If each side must be painted independently, create a unique paint UV channel and set both `RuntimeMeshPaintTargetComponent.UVChannel` and material `UV Index` to that channel.
 
-This is expected behavior for UV-space painting. The plugin writes to a texture. If two polygons use the same part of that texture, they will receive the same paint.
+You can still keep mirrored UVs for normal textures. The paint UV channel can be separate.
 
-Use mirrored UVs only when mirrored paint is acceptable. If the player must paint each side independently, create a separate unique paint UV channel and set both:
+## Brush Size Looks Different Across Meshes
 
-- `RuntimeMeshPaintTargetComponent.UVChannel`
-- Material function `UV Index`
+The preview ring is world-space, but the final paint footprint depends on UV texel density.
 
-to that unique paint UV channel.
+Brush size can look inconsistent when:
 
-You can still keep your original mirrored UVs for normal textures. The dedicated paint UV channel can be different from the base color or normal map UV channel.
-
-## Model And UV Quality Checklist
-
-When a specific model behaves badly, inspect the asset with this checklist:
-
-- The paint UV channel exists.
-- UVs are inside 0-1 unless you intentionally understand the tiling result.
-- No unexpected UV overlap exists on the paint UV channel.
-- Mirrored UVs are not used where independent painting is expected.
-- UV islands have enough padding.
-- UV islands are not extremely tiny compared to the render target resolution.
-- Triangles do not have zero-area or near-zero-area UVs.
-- The mesh does not contain degenerate triangles.
-- The mesh is triangulated consistently before export.
-- LODs use compatible paint UV layouts.
-- All material sections that should be painted use a material with the paint function.
-- Object scale is applied before export when possible.
-- Texel density is reasonably consistent across the paintable surface.
-
-Uneven texel density is a common reason why the same brush feels larger on one part of a mesh and smaller on another. The brush radius is world-space for the preview, but the final texture footprint is still limited by the mesh UV layout.
-
-## Brush Size Looks Different On Different Meshes
-
-The visible brush ring is based on world size, but the painted result is written into UV texture space.
-
-Brush size can appear inconsistent when:
-
-- Two meshes have very different UV texel density.
-- One mesh uses a much smaller UV island for the same world-space surface area.
+- Two meshes have different paint UV texel density.
+- A surface uses a very small UV island.
 - Object scale is not applied.
-- The material uses a different UV channel than the target component.
-- The render target resolution is too low for the mesh.
+- Render target resolution is too low.
+- The material reads a different UV channel than the target component.
 
-Fix:
+Use consistent texel density, apply object scale before export, and use a dedicated paint UV channel for assets that need predictable brush size.
 
-- Use consistent texel density on the paint UV channel.
-- Use a dedicated paint UV channel for runtime painting.
-- Apply object scale before export.
-- Keep `UVChannel` and material `UV Index` matched.
-- Increase render target resolution for large or detailed meshes.
+## Triangle Lines Or Artifacts
 
-## Diagonal Lines Or Triangle Shaped Artifacts
-
-Triangle-shaped artifacts usually point to mesh data or UV layout problems.
+If artifacts follow triangle edges or diagonals, inspect the mesh data.
 
 Check:
 
 - Degenerate or very thin triangles.
 - Zero-area UV triangles.
-- UV islands that are too small for the render target resolution.
 - Overlapped UV triangles.
-- Wrong UV channel.
+- UV islands that are too small for the render target.
 - LODs with different triangulation or UV layout.
-- A material graph that modifies UVs after the paint function.
+- Material logic that changes UVs after the paint function.
 
-If the artifact follows the mesh triangulation, inspect the model before changing brush settings.
+When the artifact follows mesh triangulation, changing brush settings usually hides the symptom instead of fixing the source.
 
-## Skeletal Mesh Specific Issues
+## Skeletal Mesh Notes
 
 Check:
 
 - The skeletal mesh has the selected `UVChannel` on the rendered LOD.
-- The collision or physics asset produces hits near the visible surface.
-- The animated pose is not too far from the collision used for tracing.
-- `Max Skeletal Mesh UVFallback Distance` is not set too low.
+- Collision or the physics asset produces hits near the visible surface.
+- The animated pose is not too far from collision.
+- LODs have compatible paint UVs.
 - Mirrored body parts do not share paint UVs unless mirrored paint is desired.
-- LODs have compatible UV layouts.
 
-`Max Skeletal Mesh UVFallback Distance` only limits skeletal UV fallback resolution. It does not control brush size. A value of `0.0` disables this distance limit. If valid hits are rejected on animated meshes, test with `0.0` first, then add a limit only if needed.
+`Max Skeletal Mesh UVFallback Distance` only limits skeletal UV fallback resolution. It does not control brush size. `0.0` disables the distance limit.
 
-## Static Mesh, Nanite, And LOD Checks
+## Static Mesh, Nanite, And LOD Notes
 
 For static meshes:
 
-- Keep paint UVs available on LOD 0 and any LODs used by the material.
+- Keep paint UVs available on LOD 0 and any LOD used by the material.
 - Keep paint UV layouts compatible across LODs.
-- Test a non-Nanite duplicate if a Nanite mesh behaves differently during hit or UV resolution.
 - Make sure the visible material section is the section being hit.
+- Test a non-Nanite duplicate if a Nanite asset behaves differently during hit or UV resolution.
 
-For diagnosis, temporarily force a simple material and a simple non-Nanite mesh. If the issue disappears, the problem is likely asset data, LOD layout, material setup, or collision setup.
+## Material Color Or Material Settings Look Wrong
 
-## Material Looks Too Dark, Washed Out, Or Cannot Paint Black
+If color is too dark, washed out, or black paint does not look black, check the material graph after the paint function.
 
-Check:
+Common causes:
 
-- The `Mesh Painting` function output is connected directly enough to affect the final material.
-- The material is not multiplying the painted color by a dark texture later in the graph.
-- `Alpha` is not set lower than expected.
-- The material is not using additional tint, vertex color, or overlay logic after the paint function.
-- Lighting, exposure, and material shading can change how the chosen color appears in the level.
+- The paint output is multiplied by another texture or tint.
+- `Alpha` is lower than expected.
+- Vertex color, overlay logic, or another material layer overrides the result.
+- Lighting and exposure change how the color appears in the level.
 
-Painting black requires the material to actually use the painted base color. If another part of the material brightens, tints, or replaces the base color after the paint function, black will not appear as pure black.
+For metallic and roughness:
 
-## Metallic Or Roughness Does Not Change
-
-Check:
-
-- `Create Painted Material Settings Render Target` is enabled on the target component.
-- The material function metallic and roughness outputs are connected.
-- The controller brush settings contain the expected `Brush Metallic` and `Brush Roughness` values.
-- Eraser mode is not active.
-- The material is not overriding metallic or roughness after the paint function.
-
-If color paint works but material settings do not, focus on the material settings render target and material output connections.
+- Enable `Create Painted Material Settings Render Target`.
+- Connect the material function metallic and roughness outputs.
+- Make sure the material does not override those values after the paint function.
 
 ## Brush Preview Does Not Match Painted Area
 
 Check:
 
-- The preview and paint use the same target component.
-- The controller target filter is not changing between preview and paint.
+- Preview and paint resolve the same target component.
 - `BrushSize` is changed through `SetBrushSize` so UI and controller state stay synchronized.
-- The material `UV Index` and target `UVChannel` match.
-- The mesh has consistent UV density.
-- The mesh does not use mirrored or overlapped UVs where independent paint is expected.
+- Material `UV Index` and target `UVChannel` match.
+- The mesh has consistent paint UV density.
+- The mesh does not use mirrored or overlapped paint UVs where independent paint is expected.
 
-On badly scaled UVs, the world-space preview can look correct while the UV-space paint result looks stretched. That is a paint UV layout issue.
+On badly scaled UVs, the world-space preview can be correct while the UV-space paint result looks stretched.
 
 ## Asset Preparation Recommendations
 
@@ -291,4 +220,4 @@ For the most reliable runtime painting:
 - Apply object scale before export.
 - Test the model with a simple material before using a complex production material.
 
-This does not mean your art UVs must change. You can keep existing UVs for normal textures and add a separate paint UV channel only for runtime painting.
+You do not need to change your original art UVs. You can keep them for normal textures and add a separate UV channel only for runtime painting.
