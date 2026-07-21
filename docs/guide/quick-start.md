@@ -1,77 +1,74 @@
 # Quick Start
 
-This page shows the shortest path from an empty actor to a paintable runtime mesh.
+This guide shows the shortest setup for painting a mesh at runtime.
 
-## 1. Add a Paint Target
+## 1. Place a Mesh in the Level
 
-Add `RuntimeMeshPaintTargetComponent` to the actor that owns the mesh you want to paint.
+Start by placing the mesh you want to paint in your scene.
 
-Then configure one of the target modes:
+![A mesh placed in the level](/quick-start/01-place-mesh.png)
 
-- Use `TargetMesh` for a single mesh component.
-- Use `MeshTargets` when the actor has multiple paintable mesh components.
+## 2. Add the Paint Target Component
 
-## 2. Initialize the Target
+Select the actor that owns the mesh, then add `RuntimeMeshPaintTargetComponent` from the Details panel.
 
-Call:
+This component owns the runtime render targets, prepares the paint textures, and applies them to the target mesh materials when the game starts.
 
-```text
-InitializeRuntimePaintTarget
-```
+![RuntimeMeshPaintTargetComponent added to the mesh actor](/quick-start/02-add-paint-target.png)
 
-This creates the runtime render targets and binds them to the target mesh material instances.
+## 3. Review the Runtime Target Settings
 
-## 3. Prepare the Material
+The default render target settings are enough for a first test. You can later adjust the texture resolution, render target format, initial colors, and texture parameter names from the `Runtime Target` section.
 
-Your mesh material should sample:
+![Runtime target settings](/quick-start/03-runtime-target-settings.png)
 
-```text
-PaintedColorTexture
-PaintedMaterialSettingsTexture
-```
+## 4. Choose Mesh Targets When Needed
 
-The target component assigns these texture parameters at runtime.
+If the actor has a single mesh component, the target component can resolve it automatically.
 
-## 4. Add the Paint Controller
+If the actor contains multiple mesh components and you only want specific meshes to be paintable, add their component names to `Mesh Targets`.
 
-Add `PaintingModeControllerComponent` to the player pawn or player controller side.
+![Mesh Targets list](/quick-start/04-mesh-targets.png)
 
-This component handles:
+## 5. Check Collision
 
-- Paint input
-- Brush settings
-- Color picker UI
-- Brush preview
-- Camera behavior
-- Multiplayer paint command submission
+The mesh must block the trace channel used by the painting controller. By default, this is `Visibility`.
 
-## 5. Use the Plugin Input Mapping
+If the trace does not hit the mesh, the brush preview cannot lock onto the surface and painting will not be applied.
 
-Use the input mapping assets:
+![Visibility collision set to Block](/quick-start/05-visibility-collision.png)
 
-```text
-/RuntimeMeshPainting/Input/IMC_PaintingMode
-/RuntimeMeshPainting/Input/IMC_PaintingModeToggle
-```
+## 6. Set Up the Mesh Material
 
-## 6. Enter Paint Mode
+Open the mesh material and connect the plugin's `Mesh Painting` material function to your material output.
 
-Call:
+At minimum, your material should use the runtime paint textures provided by the target component:
 
-```text
-EnterPaintingMode
-```
+- `PaintedColorTexture`
+- `PaintedMaterialSettingsTexture`
 
-The player can now paint the configured mesh target.
+For the full material graph setup, see [Material Setup](/guide/material-setup).
 
-## Common First Test
+![Mesh Painting material function connected to a material](/quick-start/06-material-function.png)
 
-Use a simple cube with non-overlapping UV islands and a material that displays `PaintedColorTexture`.
+## 7. Add the Painting Controller
 
-After this works, test:
+Go to the player pawn, character, or controller class that will handle painting input, then add `PaintingModeControllerComponent`.
 
-- A skeletal mesh
-- A larger brush near UV seams
-- Eraser mode
-- Color picking
-- Multiplayer replication
+This component handles paint mode input, brush settings, brush preview, color picking, camera behavior, and multiplayer paint command submission.
+
+![PaintingModeControllerComponent added to the player character](/quick-start/07-add-paint-controller.png)
+
+## 8. Optional Paint Target Filter
+
+You can leave `PaintTargetComponents` empty on the controller. In that case, the controller can paint any valid `RuntimeMeshPaintTargetComponent` it hits.
+
+If you fill `PaintTargetComponents`, painting is limited to only the target components in that list.
+
+## 9. Enter Paint Mode
+
+Start paint mode with your configured input or by calling `EnterPaintingMode`.
+
+When setup is correct, the color picker opens, the brush preview follows the mesh surface, and left mouse painting applies color to the runtime paint texture.
+
+That's all you need for a basic runtime paint test. If your project needs multiplayer, custom materials, input changes, or advanced brush behavior, continue with the other documentation pages.
