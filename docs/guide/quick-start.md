@@ -16,13 +16,13 @@ This component owns the runtime render targets, prepares the paint textures, and
 
 ![RuntimeMeshPaintTargetComponent added to the mesh actor](/quick-start/02-add-paint-target.png)
 
-## 3. Review the Runtime Target Settings
+## 3. Optional: Review the Runtime Target Settings
 
 The default render target settings are enough for a first test. You can later adjust the texture resolution, render target format, initial colors, and texture parameter names from the `Runtime Target` section.
 
 ![Runtime target settings](/quick-start/03-runtime-target-settings.png)
 
-## 4. Choose Mesh Targets When Needed
+## 4. Optional: Choose Mesh Targets When Needed
 
 If the actor has a single mesh component, the target component can resolve it automatically.
 
@@ -54,15 +54,19 @@ This component handles paint mode input, brush settings, brush preview, color pi
 
 ![PaintingModeControllerComponent added to the player character](/quick-start/07-add-paint-controller.png)
 
-## 8. Optional Paint Target Filter
+## 8. Optional: Paint Target Filter
 
 You can leave `PaintTargetComponents` empty on the controller. In that case, the controller can paint any valid `RuntimeMeshPaintTargetComponent` it hits.
 
 If you fill `PaintTargetComponents`, painting is limited to only the target components in that list.
 
-## 9. Enter Paint Mode and Controls
+## 9. Enter Paint Mode
 
 Start paint mode with the default toggle input or by calling `EnterPaintingMode`.
+
+When setup is correct, the color picker opens, the brush preview follows the mesh surface, and painting applies color to the runtime paint texture.
+
+### Optional: Control Modes
 
 The controller includes a `Control Mode` option:
 
@@ -71,6 +75,8 @@ The controller includes a `Control Mode` option:
 - `None` disables the plugin input handling. Use it only when you want to drive painting manually from your own Blueprint or C++ code.
 
 ![Painting controller control mode](/quick-start/08-control-mode.png)
+
+### Optional: Ready Input Assets
 
 If `bLoadDefaultInputAssets` is enabled, the component loads the plugin's ready-to-use input assets:
 
@@ -84,11 +90,8 @@ Default quick controls:
 - `Space` picks the color under the cursor.
 - `Middle Mouse + Drag` orbits the painting camera.
 - `Shift + Middle Mouse + Drag` pans the painting camera.
-- `Right Mouse + Drag` adjusts brush size.
 - `Ctrl + Mouse Wheel` adjusts brush size.
 - `Mouse Wheel` zooms the camera in `Character Lock`.
 - `W/A/S/D` moves the character in `Character Lock`.
-
-When setup is correct, the color picker opens, the brush preview follows the mesh surface, and painting applies color to the runtime paint texture.
 
 That's all you need for a basic runtime paint test. If your project needs multiplayer, custom materials, input changes, or advanced brush behavior, continue with the other documentation pages.
