@@ -46,7 +46,7 @@ Common causes:
 
 ## Brush Preview Appears, But Paint Does Not Apply
 
-If the brush preview follows the surface, tracing is usually working. In this case, the most common cause is material setup.
+If the brush preview follows the surface, tracing is usually working. In this case, the problem is usually material setup or a broken paint UV layout.
 
 Check:
 
@@ -54,9 +54,12 @@ Check:
 - The function outputs are connected to `Base Color`, `Metallic`, and `Roughness` as needed.
 - The material is assigned to the mesh section you are painting.
 - The runtime paint texture parameter names are still compatible with the plugin material function.
+- The selected paint UV channel exists and is unwrapped correctly.
+- The paint UVs are inside the expected 0-1 space.
+- The UVs are not collapsed, zero-area, stacked unintentionally, or assigned to the wrong channel.
 - The target render targets were created successfully.
 
-Fix the material first, then check the paint target and UV channel.
+Fix the material first, then inspect the model's paint UVs. If the model UVs are broken, the plugin cannot solve that in code. Runtime Mesh Painting can only paint through the UV data the model provides, so repairing invalid UVs is the responsibility of the asset/model setup.
 
 ## Brush Preview Missing Or Flickering
 
