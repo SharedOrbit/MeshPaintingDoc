@@ -11,21 +11,21 @@ hero:
 
 features:
   - title: Quick Start
-    details: Add the target component, connect the material function, and start painting in a few steps.
+    details: Learn the fastest way to make a mesh paintable at runtime.
     link: /guide/quick-start
   - title: Multiplayer
-    details: Replicate lightweight paint commands, keep textures local, and rebuild painted state for late join.
+    details: Understand how runtime paint replication works from live strokes to late join replay.
     link: /systems/multiplayer
   - title: Troubleshooting
-    details: Diagnose material setup, UV channel mismatches, preview visibility, seams, and trace issues.
+    details: Find the real cause of common paint setup and asset problems.
     link: /reference/troubleshooting
   - title: Demo
-    details: See static and skeletal mesh painting, GPU brush preview, seam handling, and replicated strokes.
+    details: Watch the plugin working in real runtime painting scenarios.
     link: /demo
   - title: Roadmap
-    details: Follow forward-looking work such as brush types, texture painting, and feedback-driven updates.
+    details: See what is planned next for the plugin.
     link: /roadmap
   - title: Contact
-    details: Use Discord for support, feedback, bug reports, and Shared Orbit plugin questions.
+    details: Learn where to get support, send feedback, or contact Shared Orbit.
     link: /contact
 ---
