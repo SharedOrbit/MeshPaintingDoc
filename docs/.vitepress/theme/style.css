@@ -343,6 +343,29 @@ body {
   color: #9bd4ff;
 }
 
+.demo-download-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  margin: 14px 0 10px;
+  padding: 0 18px;
+  border: 1px solid rgba(120, 195, 255, 0.72);
+  border-radius: 6px;
+  background: #1678d2;
+  box-shadow: 0 10px 28px rgba(22, 120, 210, 0.26);
+  color: #f8fbff !important;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none !important;
+}
+
+.demo-download-button:hover {
+  border-color: rgba(255, 211, 138, 0.84);
+  background: #248dea;
+  color: #ffffff !important;
+}
+
 .custom-block {
   border-radius: 8px;
   border-color: rgba(73, 92, 112, 0.86);
