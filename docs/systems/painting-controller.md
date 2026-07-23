@@ -16,7 +16,7 @@ The controller handles the player-side part of the painting workflow:
 - Finds the correct `RuntimeMeshPaintTargetComponent`.
 - Applies the current brush settings.
 - Shows the runtime color picker widget.
-- Displays the brush cursor and brush area preview.
+- Displays the brush cursor and GPU brush area preview.
 - Controls paint-mode orbit, pan, zoom, and movement behavior.
 - Sends multiplayer paint commands when the target has replication enabled.
 
@@ -153,24 +153,32 @@ The default `T_Brush` texture is already prepared this way: the painted tip is t
 
 ## Brush Area Preview
 
-The brush area preview draws the visible ring on top of the hit surface.
+The brush area preview is now generated through the same GPU projection path used by painting.
+
+The controller resolves the hit under the cursor, asks the target component to update its `BrushPreviewMaskRenderTarget`, and the `Mesh Painting` material function displays that mask on the mesh. This means the preview is not a separate world-space brush mesh anymore. It is a render-target mask on the painted material, so it follows the paintable UV/surface result much more closely.
 
 ![Brush area preview settings](/painting-controller/04-brush-preview-settings.png)
 
 | Setting | Purpose |
 | --- | --- |
 | `Enable Brush Area Preview` | Enables or disables the surface ring preview. |
-| `Brush Area Preview Line Thickness` | Base line thickness. |
-| `Brush Area Preview Thickness Brush Size Multiplier` | Adds thickness based on brush size. |
-| `Brush Area Preview Color` | Preview line color. |
-| `Brush Area Preview Emissive Intensity` | Brightness multiplier for the preview color. |
-| `Brush Area Preview Surface Offset` | Small offset from the surface to avoid depth fighting. |
-| `Brush Area Preview Segments` | Number of points used to draw the ring. |
-| `Brush Area Preview Smoothing Speed` | Smooths preview movement across the surface. |
+| `Brush Area Preview Line Thickness` | Base thickness of the preview ring. |
+| `Brush Area Preview Thickness Brush Size Multiplier` | Adds extra line thickness as brush size increases. |
+| `Brush Area Preview Color` | Tint multiplied with the current brush color. White keeps the ring in the active paint color. |
+| `Brush Area Preview Emissive Intensity` | Brightness multiplier for the preview mask. This makes the ring readable without using the old brush mesh preview. |
 
 ![Brush area preview in game](/painting-controller/05-brush-preview-runtime.png)
 
-The preview follows the same paint target filtering and trace channel as painting. If the target cannot be resolved, the preview is hidden after a short grace period.
+The material must connect the `Brush Emissive` output from the `Mesh Painting` material function to `Emissive Color`. If that output is not connected, painting can still work, but the brush area preview will not be visible on the mesh.
+
+The preview follows the same paint target filtering and trace channel as painting. It is hidden when the cursor is over the color picker UI or when eyedropper mode is active. Short transient trace misses are held briefly to avoid visible flicker.
+
+Advanced Blueprint-only tuning:
+
+| Setting | Purpose |
+| --- | --- |
+| `Brush Area Preview Opacity` | Alpha multiplier for the preview mask. |
+| `Brush Area Preview Brush Size Scale` | Multiplies preview radius without changing the actual paint brush size. Keep this at `1.0` unless you intentionally want preview-only scaling. |
 
 ## Camera and Movement
 
@@ -234,7 +242,9 @@ The component exposes Blueprint events for paint mode and input state changes.
 
 The controller is the multiplayer submission point for player input.
 
-When the target has `Replicate Runtime Paint` enabled, the controller applies local prediction first, then submits a compact paint command batch to the server. The target component validates and stores the authoritative paint history. Late join and replay details are covered in [Multiplayer](/systems/multiplayer).
+When the target has `Replicate Runtime Paint` enabled, the controller applies local prediction first, then submits a compact paint command batch to the server.
+
+For skeletal meshes, the command also carries screen projection data so other clients can reproduce the same GPU projected brush without using the old CPU skeletal UV fallback path. The target component validates and stores the authoritative paint history. Late join and replay details are covered in [Multiplayer](/systems/multiplayer).
 
 ## Common Mistakes
 
@@ -245,3 +255,4 @@ When the target has `Replicate Runtime Paint` enabled, the controller applies lo
 - `Load Default Input Assets` is disabled but custom input actions or mapping contexts were not assigned.
 - Heavy Blueprint logic is bound to `OnPaintTriggered`, causing hitches during continuous strokes.
 - The cursor is over the color picker UI, so painting and preview are intentionally blocked.
+- The material does not connect `Brush Emissive` to `Emissive Color`, so the GPU brush area preview mask is generated but not visible.

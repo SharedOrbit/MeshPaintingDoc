@@ -13,6 +13,7 @@ The paint target component is responsible for the mesh-side part of the system:
 - Finds the mesh component that should receive paint.
 - Creates the runtime color render target.
 - Optionally creates the material settings render target.
+- Creates the brush preview mask render target.
 - Assigns those render targets to dynamic material instances.
 - Resolves hit data into UV and surface data.
 - Applies paint commands locally.
@@ -46,8 +47,17 @@ The `Runtime Target` section controls the render targets and material texture bi
 | `Initial Material Settings Color` | Starting clear color for the material settings target. |
 | `Painted Color Texture Parameter Name` | Material texture parameter that receives the color paint target. |
 | `Painted Material Settings Texture Parameter Name` | Material texture parameter that receives the material settings target. |
+| `Brush Preview Mask Texture Parameter Name` | Material texture parameter that receives the GPU brush preview mask. |
 
 In most cases, keep the texture parameter names at their defaults and set up the material through the plugin's `Mesh Painting` material function.
+
+The default parameter names expected by the plugin material function are:
+
+| Parameter | Purpose |
+| --- | --- |
+| `PaintedColorTexture` | Runtime base color paint texture. |
+| `PaintedMaterialSettingsTexture` | Runtime metallic/roughness paint texture. |
+| `BrushPreviewMaskTexture` | Runtime brush preview ring mask. |
 
 ## Mesh Targets
 
@@ -73,6 +83,8 @@ This must match the `UV Index` used by the `Mesh Painting` material function. If
 - A value greater than `0.0` rejects fallback results if the resolved triangle is farther than that distance from the hit point.
 
 This does not control brush size or preview size.
+
+The current GPU projected painting path avoids using skeletal fallback during the normal brush hot path. Keep this setting at its default unless you are calling lower-level hit resolving functions that explicitly need fallback behavior.
 
 ## UV Island Clip
 

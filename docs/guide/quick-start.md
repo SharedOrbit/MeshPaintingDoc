@@ -42,6 +42,8 @@ If the trace does not hit the mesh, the brush preview cannot lock onto the surfa
 
 Open the mesh material and set up the `Mesh Painting` material function correctly.
 
+For the normal setup, connect `BaseColor`, `Metallic`, `Roughness`, and `Brush Emissive` to the matching material outputs. `Brush Emissive` is required for the on-mesh brush area preview.
+
 For more information about the material setup, see [Material Setup](/guide/material-setup).
 
 ![Mesh Painting material function connected to a material](/quick-start/06-material-function.png)
@@ -80,8 +82,8 @@ The controller includes a `Control Mode` option:
 
 If `bLoadDefaultInputAssets` is enabled, the component loads the plugin's ready-to-use input assets:
 
-- `/RuntimeMeshPainting/Input/IMC_PaintingMode`
-- `/RuntimeMeshPainting/Input/IMC_PaintingModeToggle`
+- `/MeshPaintingCore/Input/IMC_PaintingMode`
+- `/MeshPaintingCore/Input/IMC_PaintingModeToggle`
 
 Default quick controls:
 

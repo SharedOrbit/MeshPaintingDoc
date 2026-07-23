@@ -76,13 +76,17 @@ For late join to work correctly, keep `Max Replicated Paint Commands` at `0` unl
 
 The plugin does not send render target pixels over the network.
 
-Instead, every accepted paint action is stored as a compact command containing the target, mesh target index, UV channel, stroke id, brush ray, brush center, brush normal, brush size, color, material settings, and erase flag.
+Instead, every accepted paint action is stored as a compact command containing the target, mesh target index, UV channel, stroke id, brush ray, brush center, brush normal, brush size, color, material settings, erase flag, and optional screen projection data.
+
+Skeletal mesh paint commands include screen projection data. This lets every client reproduce the same GPU projected brush result without relying on per-poly collision, `FindCollisionUV`, or the old CPU skeletal UV fallback path.
 
 ### Local Prediction
 
 When a local player paints, the controller applies the paint immediately on that client for responsive feedback.
 
 The same command is then sent to the server. When the server accepts it, other clients receive and apply the command locally. The original painting client skips duplicate application of its own predicted command.
+
+Changing color, metallic, roughness, brush size, or eraser state only updates local brush settings. A history entry is created only when an actual paint command is applied.
 
 ### Server Validation
 
@@ -96,6 +100,7 @@ Validation checks include:
 - The mesh target index is valid.
 - The brush size is within `Max Replicated Brush Size`.
 - The brush ray and normal are valid.
+- Skeletal mesh commands include valid screen projection data.
 - Optional distance validation passes when `Max Replicated Paint Distance` is greater than `0`.
 
 ### Late Join Replay
@@ -103,6 +108,8 @@ Validation checks include:
 Late-joining clients initialize their local runtime render targets, receive the replicated command history, and replay the commands over multiple ticks.
 
 `Replicated Paint Replay Commands Per Tick` controls how quickly the history is replayed. Higher values catch up faster, while lower values reduce hitch risk when the history is large.
+
+Replicated commands are queued by `CommandId` before replay. If a command cannot be applied yet because the local runtime target is not ready, replay pauses instead of dropping the command.
 
 ### Dedicated Server Behavior
 
