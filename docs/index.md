@@ -11,21 +11,21 @@ hero:
 
 features:
   - title: Quick Start
-    details: Set up a paint target, prepare the material, and enter paint mode.
+    details: Add the target component, connect the material function, and start painting in a few steps.
     link: /guide/quick-start
   - title: Multiplayer
-    details: Replicates compact paint commands instead of textures, with late join replay support.
+    details: Replicate lightweight paint commands, keep textures local, and rebuild painted state for late join.
     link: /systems/multiplayer
   - title: Troubleshooting
-    details: Check common setup, packaging, input, material, and multiplayer issues.
+    details: Diagnose material setup, UV channel mismatches, preview visibility, seams, and trace issues.
     link: /reference/troubleshooting
   - title: Demo
-    details: Watch the runtime painting workflow, GPU brush preview, and replicated paint behavior.
+    details: See static and skeletal mesh painting, GPU brush preview, seam handling, and replicated strokes.
     link: /demo
   - title: Roadmap
-    details: See planned improvements, documentation updates, and future runtime painting features.
+    details: Follow forward-looking work such as brush types, texture painting, and feedback-driven updates.
     link: /roadmap
   - title: Contact
-    details: Get support for setup, packaging, integration, and multiplayer issues.
+    details: Use Discord for support, feedback, bug reports, and Shared Orbit plugin questions.
     link: /contact
 ---
