@@ -17,6 +17,7 @@ Check these before changing advanced settings:
 - The player has `PaintingModeControllerComponent`.
 - The mesh material uses the `Mesh Painting` material function.
 - The material function outputs are connected to the material output.
+- `Brush Emissive` is connected to `Emissive Color` if you expect the on-mesh brush preview to be visible.
 - Material `UV Index` matches `RuntimeMeshPaintTargetComponent.UVChannel`.
 - The mesh blocks the controller `Paint Trace Channel`, usually `Visibility`.
 - The correct mesh component and material section are being hit.
@@ -43,6 +44,7 @@ Common causes:
 - The material slot you are hitting uses a different material.
 - `UVChannel` and material `UV Index` do not match.
 - The mesh does not block the paint trace channel.
+- The material only shows the original texture because the paint outputs are not connected to the final material outputs.
 
 ## Brush Preview Appears, But Paint Does Not Apply
 
@@ -51,7 +53,7 @@ If the brush preview follows the surface, tracing is usually working. In this ca
 Check:
 
 - The mesh material uses the `Mesh Painting` material function.
-- The function outputs are connected to `Base Color`, `Metallic`, and `Roughness` as needed.
+- The function outputs are connected to `Base Color`, `Metallic`, `Roughness`, and `Emissive Color` as needed.
 - The material is assigned to the mesh section you are painting.
 - The runtime paint texture parameter names are still compatible with the plugin material function.
 - The target render targets were created successfully.
@@ -60,10 +62,13 @@ Fix the material first, then check the paint target and UV channel.
 
 ## Brush Preview Missing Or Flickering
 
-This is usually a trace, collision, or target filtering issue.
+This is usually a trace, material preview, collision, or target filtering issue.
 
 Check:
 
+- `Enable Brush Area Preview` is enabled on `PaintingModeControllerComponent`.
+- `Brush Emissive` from the `Mesh Painting` material function is connected to `Emissive Color`.
+- The material still receives the default `BrushPreviewMaskTexture` parameter from the paint target component.
 - The mesh blocks `Paint Trace Channel`.
 - `Paint Trace Complex` is enabled when simple collision is too rough.
 - Another object is not blocking the trace before the paintable mesh.
@@ -135,7 +140,7 @@ You can still keep mirrored UVs for normal textures. The paint UV channel can be
 
 ## Brush Size Looks Different Across Meshes
 
-The preview ring is world-space, but the final paint footprint depends on UV texel density.
+The brush is projected by the GPU and written into the mesh paint UV render target. Even when the preview and paint use the same projection path, the visible footprint can still look inconsistent when the asset UV density is inconsistent.
 
 Brush size can look inconsistent when:
 
@@ -172,7 +177,9 @@ Check:
 - LODs have compatible paint UVs.
 - Mirrored body parts do not share paint UVs unless mirrored paint is desired.
 
-`Max Skeletal Mesh UVFallback Distance` only limits skeletal UV fallback resolution. It does not control brush size. `0.0` disables the distance limit.
+The normal skeletal paint path uses GPU screen projection data. Per-poly collision, `FindCollisionUV`, and Support UV From Hit Results are not required for normal painting.
+
+`Max Skeletal Mesh UVFallback Distance` only affects lower-level fallback hit resolving paths. It does not control brush size or the normal GPU brush result.
 
 ## Static Mesh, Nanite, And LOD Notes
 
@@ -199,6 +206,13 @@ For metallic and roughness:
 - Enable `Create Painted Material Settings Render Target`.
 - Connect the material function metallic and roughness outputs.
 - Make sure the material does not override those values after the paint function.
+- Remember that `Initial Material Settings Color` uses red for metallic and green for roughness.
+
+For the brush preview:
+
+- Connect `Brush Emissive` to `Emissive Color`.
+- Increase `Brush Area Preview Emissive Intensity` on the controller if the ring is too dim.
+- Keep `Brush Area Preview Color` white if the preview should follow the current paint color.
 
 ## Brush Preview Does Not Match Painted Area
 
@@ -210,7 +224,7 @@ Check:
 - The mesh has consistent paint UV density.
 - The mesh does not use mirrored or overlapped paint UVs where independent paint is expected.
 
-On badly scaled UVs, the world-space preview can be correct while the UV-space paint result looks stretched.
+Preview and paint now use the same GPU projection path. If they still appear different, the usual causes are a material reading the wrong UV channel, inconsistent UV texel density, mirrored paint UVs, or a material graph modifying the paint result after the `Mesh Painting` function.
 
 ## Asset Preparation Recommendations
 

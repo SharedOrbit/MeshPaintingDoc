@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   title: 'Mesh Painting',
-  description: 'Runtime and multiplayer-ready mesh painting for Unreal Engine.',
+  description: 'GPU-powered runtime mesh painting for Unreal Engine with static and skeletal mesh support, seam-safe UV projection, and multiplayer-ready paint replication.',
   base: '/MeshPaintingDoc/',
   lang: 'en-US',
   cleanUrls: true,
@@ -13,7 +13,7 @@ export default defineConfig({
     ['link', { rel: 'icon', href: '/MeshPaintingDoc/icon.png' }],
     ['meta', { name: 'theme-color', content: '#1d4ed8' }],
     ['meta', { property: 'og:title', content: 'Mesh Painting - Runtime & Multiplayer Ready' }],
-    ['meta', { property: 'og:description', content: 'GPU-based runtime mesh painting plugin for Unreal Engine static and skeletal meshes.' }]
+    ['meta', { property: 'og:description', content: 'GPU-powered runtime mesh painting for Unreal Engine with static and skeletal mesh support, seam-safe UV projection, and multiplayer-ready paint replication.' }]
   ],
 
   themeConfig: {

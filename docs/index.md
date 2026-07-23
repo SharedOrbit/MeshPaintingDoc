@@ -4,7 +4,7 @@ layout: home
 hero:
   name: Mesh Painting
   text: Runtime & Multiplayer Ready
-  tagline: GPU-based runtime mesh painting for Unreal Engine static and skeletal meshes.
+  tagline: GPU-powered runtime mesh painting for Unreal Engine with static and skeletal mesh support, seam-safe UV projection, and multiplayer-ready paint replication.
   image:
     src: /icon.png
     alt: Runtime Mesh Painting icon
@@ -20,7 +20,7 @@ features:
     details: Check common setup, packaging, input, material, and multiplayer issues.
     link: /reference/troubleshooting
   - title: Demo
-    details: Watch the core painting workflow, brush behavior, eraser, and color tools.
+    details: Watch the runtime painting workflow, GPU brush preview, and replicated paint behavior.
     link: /demo
   - title: Roadmap
     details: See planned improvements, documentation updates, and future runtime painting features.
