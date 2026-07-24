@@ -2,6 +2,18 @@
 
 This guide shows the shortest setup for painting a mesh at runtime.
 
+## Quick Start Tutorial
+
+<div class="video-frame">
+  <iframe
+    src="https://www.youtube-nocookie.com/embed/aPDALwVkOak"
+    title="Mesh Painting quick start tutorial video"
+    loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+  </iframe>
+</div>
+
 ## 1. Place a Mesh in the Level
 
 Start by placing the mesh you want to paint in your scene.
