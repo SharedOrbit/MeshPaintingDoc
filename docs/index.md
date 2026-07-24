@@ -20,7 +20,7 @@ features:
     details: Find the real cause of common paint setup and asset problems.
     link: /reference/troubleshooting
   - title: Demo
-    details: Watch the plugin working in real runtime painting scenarios.
+    details: Download packaged demo builds and test runtime character painting.
     link: /demo
   - title: Roadmap
     details: See what is planned next for the plugin.
