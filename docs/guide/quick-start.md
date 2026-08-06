@@ -88,6 +88,8 @@ The controller includes a `Control Mode` option:
 - `Simple` keeps the setup lighter for custom pawns, drone-style cameras, or cases where you do not want character movement handling from the plugin.
 - `None` disables the plugin input handling. Use it only when you want to drive painting manually from your own Blueprint or C++ code.
 
+If you are using the default First Person template, use `Simple` mode for the first test. `Character Lock` expects a character setup with a SpringArm, so `EnterPaintingMode` can return `false` on first-person characters that only have a camera.
+
 ![Painting controller control mode](/quick-start/08-control-mode.png)
 
 ### Optional: Ready Input Assets

@@ -34,6 +34,8 @@ For a normal third-person character, add it to the character blueprint. For a dr
 
 Use `Simple` mode when the owner is not a standard character or when you do not want the component to lock character movement.
 
+For the default First Person template, start with `Simple` mode. `CharacterLock` expects a SpringArm-based character camera setup, and `EnterPaintingMode` may return `false` if that setup is missing.
+
 ## Control Mode and Input
 
 The `Controls` and `Input` sections define how the component receives paint input.
