@@ -1,43 +1,60 @@
 :root {
-  --vp-c-bg: #0b0f14;
-  --vp-c-bg-alt: #090d12;
-  --vp-c-bg-elv: #111821;
-  --vp-c-bg-soft: #151d27;
-  --vp-c-divider: #2c3744;
-  --vp-c-border: #31404f;
-  --vp-c-gutter: #1d2732;
+  --ue-bg: #070b10;
+  --ue-bg-alt: #0a1017;
+  --ue-bg-deep: #030609;
+  --ue-panel: #111923;
+  --ue-panel-alt: #16212c;
+  --ue-panel-hover: #1b2a37;
+  --ue-border: rgba(75, 98, 121, 0.78);
+  --ue-border-strong: rgba(102, 134, 162, 0.9);
+  --ue-grid: rgba(70, 174, 226, 0.045);
+  --ue-blue: #00a9e0;
+  --ue-blue-2: #31c7ff;
+  --ue-blue-3: #0074b8;
+  --ue-cyan: #7de7ff;
+  --ue-text: #f2f7fb;
+  --ue-text-2: #b7c7d7;
+  --ue-text-3: #8191a2;
 
-  --vp-c-text-1: #eef4fb;
-  --vp-c-text-2: #b7c5d4;
-  --vp-c-text-3: #8392a4;
+  --vp-c-bg: var(--ue-bg);
+  --vp-c-bg-alt: var(--ue-bg-alt);
+  --vp-c-bg-elv: var(--ue-panel);
+  --vp-c-bg-soft: var(--ue-panel-alt);
+  --vp-c-divider: rgba(48, 64, 82, 0.95);
+  --vp-c-border: rgba(70, 92, 112, 0.98);
+  --vp-c-gutter: #16202b;
 
-  --vp-c-brand-1: #47a8ff;
-  --vp-c-brand-2: #2f8de8;
-  --vp-c-brand-3: #1667b7;
-  --vp-c-brand-soft: rgba(71, 168, 255, 0.16);
+  --vp-c-text-1: var(--ue-text);
+  --vp-c-text-2: var(--ue-text-2);
+  --vp-c-text-3: var(--ue-text-3);
 
-  --vp-c-tip-1: #47a8ff;
-  --vp-c-tip-2: #2f8de8;
-  --vp-c-tip-3: #1667b7;
-  --vp-c-tip-soft: rgba(71, 168, 255, 0.13);
+  --vp-c-brand-1: var(--ue-blue-2);
+  --vp-c-brand-2: var(--ue-blue);
+  --vp-c-brand-3: var(--ue-blue-3);
+  --vp-c-brand-soft: rgba(0, 169, 224, 0.16);
 
-  --vp-c-warning-1: #f59e0b;
-  --vp-c-warning-soft: rgba(245, 158, 11, 0.14);
+  --vp-c-tip-1: var(--ue-blue-2);
+  --vp-c-tip-2: var(--ue-blue);
+  --vp-c-tip-3: var(--ue-blue-3);
+  --vp-c-tip-soft: rgba(0, 169, 224, 0.13);
 
-  --vp-button-brand-bg: #1678d2;
-  --vp-button-brand-hover-bg: #248dea;
-  --vp-button-brand-active-bg: #0f65b3;
-  --vp-button-brand-border: #3fa8ff;
+  --vp-c-warning-1: #f4c34f;
+  --vp-c-warning-soft: rgba(244, 195, 79, 0.12);
+
+  --vp-button-brand-bg: var(--ue-blue-3);
+  --vp-button-brand-hover-bg: var(--ue-blue);
+  --vp-button-brand-active-bg: #005f9b;
+  --vp-button-brand-border: var(--ue-blue-2);
   --vp-button-brand-text: #f8fbff;
 
-  --vp-button-alt-bg: #151d27;
-  --vp-button-alt-hover-bg: #1b2633;
-  --vp-button-alt-border: #33485c;
-  --vp-button-alt-text: #d9e6f3;
+  --vp-button-alt-bg: var(--ue-panel);
+  --vp-button-alt-hover-bg: var(--ue-panel-hover);
+  --vp-button-alt-border: var(--ue-border);
+  --vp-button-alt-text: #dce8f3;
 
   --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: linear-gradient(100deg, #ffffff 4%, #78c3ff 58%, #f59e0b 96%);
-  --vp-home-hero-image-background-image: linear-gradient(135deg, rgba(71, 168, 255, 0.18), rgba(245, 158, 11, 0.12));
+  --vp-home-hero-name-background: linear-gradient(100deg, #ffffff 4%, var(--ue-cyan) 54%, var(--ue-blue) 96%);
+  --vp-home-hero-image-background-image: linear-gradient(135deg, rgba(0, 169, 224, 0.22), rgba(125, 231, 255, 0.08));
   --vp-home-hero-image-filter: blur(28px);
 
   --vp-font-family-base: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -46,20 +63,21 @@
 }
 
 html {
-  background: #0b0f14;
+  background: var(--ue-bg);
 }
 
 body {
   background:
-    linear-gradient(rgba(71, 168, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(71, 168, 255, 0.035) 1px, transparent 1px),
-    #0b0f14;
+    linear-gradient(var(--ue-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ue-grid) 1px, transparent 1px),
+    linear-gradient(180deg, #0b1118 0%, var(--ue-bg) 420px),
+    var(--ue-bg);
   background-size: 40px 40px, 40px 40px, auto;
 }
 
 .VPNav {
-  border-bottom: 1px solid rgba(73, 92, 112, 0.72);
-  background: rgba(9, 13, 18, 0.94);
+  border-bottom: 1px solid var(--ue-border);
+  background: rgba(7, 11, 16, 0.94);
   backdrop-filter: blur(16px);
 }
 
@@ -68,7 +86,7 @@ body {
 }
 
 .VPNavBarTitle .title {
-  color: #eef4fb;
+  color: var(--ue-text);
 }
 
 .VPNavBarTitle .logo {
@@ -79,10 +97,10 @@ body {
 .VPNavBarMenuLink {
   height: 32px;
   padding: 0 13px;
-  border: 1px solid rgba(73, 92, 112, 0.78);
+  border: 1px solid var(--ue-border);
   border-radius: 6px;
-  background: rgba(17, 24, 33, 0.72);
-  color: #b7c5d4;
+  background: rgba(17, 25, 35, 0.72);
+  color: var(--ue-text-2);
   font-weight: 700;
   transition:
     border-color 0.2s,
@@ -92,23 +110,23 @@ body {
 
 .VPNavBarMenuLink:hover,
 .VPNavBarMenuLink.active {
-  border-color: rgba(120, 195, 255, 0.82);
-  background: rgba(26, 39, 53, 0.95);
-  color: #78c3ff;
+  border-color: rgba(49, 199, 255, 0.82);
+  background: rgba(22, 43, 57, 0.95);
+  color: var(--ue-cyan);
 }
 
 .VPSidebar {
-  background: #0d1218;
-  border-right: 1px solid rgba(73, 92, 112, 0.6);
+  background: var(--ue-bg-alt);
+  border-right: 1px solid rgba(75, 98, 121, 0.6);
 }
 
 .VPSidebarItem.level-0 > .item > .text {
-  color: #eef4fb;
+  color: var(--ue-text);
   font-weight: 700;
 }
 
 .VPSidebarItem.is-active > .item .link > .text {
-  color: #78c3ff;
+  color: var(--ue-cyan);
 }
 
 .VPHome {
@@ -126,7 +144,7 @@ body {
   padding: 4px;
   border: 1px solid rgba(120, 195, 255, 0.28);
   border-radius: 10px;
-  background: rgba(238, 244, 251, 0.96);
+  background: rgba(242, 247, 251, 0.96);
   box-shadow:
     0 12px 32px rgba(0, 0, 0, 0.32),
     0 0 0 1px rgba(255, 255, 255, 0.08);
@@ -139,9 +157,9 @@ body {
   z-index: -1;
   content: "";
   background:
-    linear-gradient(180deg, rgba(11, 15, 20, 0.2), #0b0f14 76%),
-    repeating-linear-gradient(0deg, transparent 0, transparent 31px, rgba(116, 139, 163, 0.055) 32px),
-    repeating-linear-gradient(90deg, transparent 0, transparent 31px, rgba(116, 139, 163, 0.055) 32px);
+    linear-gradient(180deg, rgba(11, 17, 24, 0.18), var(--ue-bg) 76%),
+    repeating-linear-gradient(0deg, transparent 0, transparent 31px, rgba(88, 171, 214, 0.052) 32px),
+    repeating-linear-gradient(90deg, transparent 0, transparent 31px, rgba(88, 171, 214, 0.052) 32px);
 }
 
 .VPHero {
@@ -159,7 +177,7 @@ body {
 
 .VPHero .tagline {
   max-width: 620px;
-  color: #b7c5d4;
+  color: var(--ue-text-2);
 }
 
 .VPHero .image-container {
@@ -175,7 +193,7 @@ body {
   border-radius: 8px;
   box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.44),
-    0 0 0 1px rgba(116, 195, 255, 0.22);
+    0 0 0 1px rgba(49, 199, 255, 0.22);
 }
 
 .VPHome .image-bg {
@@ -188,7 +206,7 @@ body {
 }
 
 .VPButton.brand {
-  box-shadow: 0 0 0 1px rgba(120, 195, 255, 0.25), 0 10px 30px rgba(22, 120, 210, 0.24);
+  box-shadow: 0 0 0 1px rgba(49, 199, 255, 0.25), 0 10px 30px rgba(0, 116, 184, 0.24);
 }
 
 .VPFeatures {
@@ -207,10 +225,10 @@ body {
 .VPFeature .box {
   position: relative;
   min-height: 176px;
-  border: 1px solid rgba(73, 92, 112, 0.9);
+  border: 1px solid var(--ue-border);
   border-radius: 8px;
   background:
-    linear-gradient(180deg, rgba(22, 31, 43, 0.95), rgba(13, 18, 24, 0.95));
+    linear-gradient(180deg, rgba(20, 31, 42, 0.96), rgba(8, 13, 19, 0.96));
   box-shadow: 0 14px 36px rgba(0, 0, 0, 0.26);
   transition:
     border-color 0.2s,
@@ -226,26 +244,26 @@ body {
   right: 0;
   height: 2px;
   content: "";
-  background: linear-gradient(90deg, #47a8ff, rgba(71, 168, 255, 0.08), #f59e0b);
+  background: linear-gradient(90deg, var(--ue-blue-2), rgba(0, 169, 224, 0.08), var(--ue-cyan));
 }
 
 .VPFeature.link:hover .box {
-  border-color: rgba(120, 195, 255, 0.92);
+  border-color: rgba(49, 199, 255, 0.92);
   background:
-    linear-gradient(180deg, rgba(29, 43, 59, 0.98), rgba(15, 22, 30, 0.98));
+    linear-gradient(180deg, rgba(26, 43, 57, 0.98), rgba(11, 18, 25, 0.98));
   box-shadow:
     0 18px 42px rgba(0, 0, 0, 0.34),
-    0 0 0 1px rgba(120, 195, 255, 0.14);
+    0 0 0 1px rgba(49, 199, 255, 0.14);
   transform: translateY(-2px);
 }
 
 .VPFeature .title {
-  color: #eef4fb;
+  color: var(--ue-text);
   font-size: 17px;
 }
 
 .VPFeature .details {
-  color: #aebccd;
+  color: #adbfce;
   line-height: 1.65;
 }
 
@@ -255,8 +273,8 @@ body {
   bottom: 24px;
   width: 10px;
   height: 10px;
-  border-right: 2px solid #78c3ff;
-  border-bottom: 2px solid #78c3ff;
+  border-right: 2px solid var(--ue-cyan);
+  border-bottom: 2px solid var(--ue-cyan);
   content: "";
   transform: rotate(-45deg);
   transition:
@@ -265,12 +283,12 @@ body {
 }
 
 .VPFeature.link:hover .box::after {
-  border-color: #ffd38a;
+  border-color: #ffffff;
   transform: translateX(3px) rotate(-45deg);
 }
 
 .VPDoc {
-  background: #0b0f14;
+  background: var(--ue-bg);
 }
 
 .vp-doc h1,
@@ -285,62 +303,62 @@ body {
 
 .vp-doc h2 {
   margin-top: 42px;
-  border-top: 1px solid rgba(73, 92, 112, 0.72);
-  color: #eef4fb;
+  border-top: 1px solid var(--ue-border);
+  color: var(--ue-text);
 }
 
 .vp-doc h3 {
-  color: #dce8f5;
+  color: #dcecf8;
 }
 
 .vp-doc p,
 .vp-doc li {
-  color: #c2cedb;
+  color: #c3d1de;
 }
 
 .vp-doc a {
-  color: #78c3ff;
-  text-decoration-color: rgba(120, 195, 255, 0.35);
+  color: var(--ue-cyan);
+  text-decoration-color: rgba(125, 231, 255, 0.34);
 }
 
 .vp-doc a:hover {
-  color: #9bd4ff;
+  color: #ffffff;
 }
 
 .vp-doc table {
   display: table;
   width: 100%;
-  border: 1px solid rgba(73, 92, 112, 0.72);
+  border: 1px solid var(--ue-border);
   border-radius: 8px;
   overflow: hidden;
 }
 
 .vp-doc tr:nth-child(2n) {
-  background-color: rgba(21, 29, 39, 0.74);
+  background-color: rgba(20, 31, 42, 0.76);
 }
 
 .vp-doc th {
-  background: #151d27;
-  color: #eef4fb;
+  background: var(--ue-panel-alt);
+  color: var(--ue-text);
 }
 
 .vp-doc td,
 .vp-doc th {
   vertical-align: top;
-  border-color: rgba(73, 92, 112, 0.72);
+  border-color: var(--ue-border);
 }
 
 .vp-doc div[class*="language-"] {
-  border: 1px solid rgba(73, 92, 112, 0.78);
+  border: 1px solid var(--ue-border);
   border-radius: 8px;
-  background: #0a0e13;
+  background: var(--ue-bg-deep);
 }
 
 .vp-doc :not(pre) > code {
-  border: 1px solid rgba(71, 168, 255, 0.2);
+  border: 1px solid rgba(0, 169, 224, 0.28);
   border-radius: 4px;
-  background: rgba(71, 168, 255, 0.1);
-  color: #9bd4ff;
+  background: rgba(0, 169, 224, 0.11);
+  color: var(--ue-cyan);
 }
 
 .home-video-section {
@@ -356,7 +374,7 @@ body {
 
 .home-video-eyebrow {
   margin: 0 0 8px !important;
-  color: #78c3ff !important;
+  color: var(--ue-cyan) !important;
   font-size: 12px;
   font-weight: 900;
   letter-spacing: 0.08em;
@@ -365,14 +383,14 @@ body {
 
 .home-video-copy h2 {
   margin: 0 0 10px !important;
-  color: #eaf2fb;
+  color: var(--ue-text);
   font-size: clamp(26px, 3vw, 38px);
   line-height: 1.12;
 }
 
 .home-video-copy p:last-child {
   margin: 0 !important;
-  color: #aeb9c6 !important;
+  color: #adbfce !important;
   font-size: 15px;
   font-weight: 650;
   line-height: 1.65;
@@ -383,9 +401,9 @@ body {
   width: 100%;
   margin: 18px 0 28px;
   overflow: hidden;
-  border: 1px solid rgba(73, 92, 112, 0.78);
+  border: 1px solid var(--ue-border);
   border-radius: 8px;
-  background: #05080d;
+  background: var(--ue-bg-deep);
   aspect-ratio: 16 / 9;
   box-shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
 }
@@ -411,16 +429,16 @@ body {
 
 .demo-download-card {
   padding: 18px;
-  border: 1px solid rgba(73, 92, 112, 0.78);
+  border: 1px solid var(--ue-border);
   border-radius: 8px;
-  background: rgba(17, 24, 33, 0.72);
+  background: rgba(17, 25, 35, 0.76);
 }
 
 .demo-download-card h2 {
   margin: 0 0 8px !important;
   padding: 0 !important;
   border: 0 !important;
-  color: #eaf2fb;
+  color: var(--ue-text);
   font-size: 18px;
   line-height: 1.3;
 }
@@ -428,7 +446,7 @@ body {
 .demo-download-card p {
   min-height: 48px;
   margin: 0 0 14px !important;
-  color: #aeb9c6 !important;
+  color: #adbfce !important;
   font-size: 13px;
   font-weight: 650;
   line-height: 1.55;
@@ -441,10 +459,10 @@ body {
   min-height: 42px;
   margin: 0;
   padding: 0 18px;
-  border: 1px solid rgba(120, 195, 255, 0.72);
+  border: 1px solid rgba(49, 199, 255, 0.72);
   border-radius: 6px;
-  background: #1678d2;
-  box-shadow: 0 10px 28px rgba(22, 120, 210, 0.26);
+  background: var(--ue-blue-3);
+  box-shadow: 0 10px 28px rgba(0, 116, 184, 0.26);
   color: #f8fbff !important;
   font-size: 14px;
   font-weight: 800;
@@ -452,14 +470,14 @@ body {
 }
 
 .demo-download-button:hover {
-  border-color: rgba(255, 211, 138, 0.84);
-  background: #248dea;
+  border-color: rgba(125, 231, 255, 0.88);
+  background: var(--ue-blue);
   color: #ffffff !important;
 }
 
 .custom-block {
   border-radius: 8px;
-  border-color: rgba(73, 92, 112, 0.86);
+  border-color: var(--ue-border);
 }
 
 .VPDoc:has(._MeshPaintingDoc_roadmap) .content-container {
@@ -512,7 +530,7 @@ body:has(._MeshPaintingDoc_roadmap) {
   margin: 0 0 48px;
   padding: 0;
   border-bottom: 0;
-  background: rgba(17, 24, 31, 0.98);
+  background: rgba(10, 16, 23, 0.98);
   overflow-x: auto;
 }
 
@@ -520,7 +538,7 @@ body:has(._MeshPaintingDoc_roadmap) {
   flex: 0 0 220px;
   padding: 16px 16px 14px;
   border-bottom: 3px solid transparent;
-  color: #7f8b98;
+  color: var(--ue-text-3);
   text-align: center;
   text-decoration: none;
   font-size: 10px;
@@ -531,8 +549,8 @@ body:has(._MeshPaintingDoc_roadmap) {
 
 .roadmap-tabs a:hover,
 .roadmap-tabs a.active {
-  border-bottom-color: #47a8ff;
-  color: #78c3ff;
+  border-bottom-color: var(--ue-blue-2);
+  color: var(--ue-cyan);
 }
 
 .roadmap-section {
@@ -552,9 +570,9 @@ body:has(._MeshPaintingDoc_roadmap) {
   grid-template-rows: 58px auto;
   width: 100%;
   min-height: 0;
-  border: 1px solid rgba(44, 55, 68, 0.95);
+  border: 1px solid rgba(47, 65, 84, 0.95);
   border-radius: 8px;
-  background: #151b23;
+  background: var(--ue-panel);
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
   color: inherit;
   cursor: pointer;
@@ -567,10 +585,10 @@ body:has(._MeshPaintingDoc_roadmap) {
 }
 
 .roadmap-card:hover {
-  border-color: rgba(120, 195, 255, 0.66);
+  border-color: rgba(49, 199, 255, 0.66);
   box-shadow:
     0 16px 40px rgba(0, 0, 0, 0.32),
-    0 0 0 1px rgba(120, 195, 255, 0.12);
+    0 0 0 1px rgba(49, 199, 255, 0.12);
   filter: brightness(1.08);
 }
 
@@ -578,8 +596,8 @@ body:has(._MeshPaintingDoc_roadmap) {
   display: flex;
   align-items: center;
   padding: 0 20px;
-  color: #aeb8c4;
-  background: #202933;
+  color: #b5c6d5;
+  background: #182432;
   font-size: 13px;
   font-weight: 900;
   line-height: 1.35;
@@ -592,8 +610,8 @@ body:has(._MeshPaintingDoc_roadmap) {
   place-items: center;
   overflow: hidden;
   background:
-    linear-gradient(135deg, rgba(71, 168, 255, 0.18), rgba(10, 14, 19, 0.1)),
-    #0f151c;
+    linear-gradient(135deg, rgba(0, 169, 224, 0.2), rgba(10, 16, 23, 0.08)),
+    #0d151e;
 }
 
 .roadmap-card-image {
@@ -632,7 +650,7 @@ body:has(._MeshPaintingDoc_roadmap) {
 
 .roadmap-card-image.has-real-image,
 .roadmap-modal-image.has-real-image {
-  background: #101820;
+  background: var(--ue-panel);
 }
 
 .roadmap-card-image.has-real-image::before,
@@ -653,15 +671,15 @@ body:has(._MeshPaintingDoc_roadmap) {
 .roadmap-card-image.tone-orange,
 .roadmap-modal-image.tone-orange {
   background:
-    linear-gradient(135deg, rgba(245, 158, 11, 0.22), rgba(10, 14, 19, 0.1)),
-    #15100a;
+    linear-gradient(135deg, rgba(0, 169, 224, 0.16), rgba(47, 65, 84, 0.16)),
+    #101822;
 }
 
 .roadmap-card-image.tone-green,
 .roadmap-modal-image.tone-green {
   background:
-    linear-gradient(135deg, rgba(56, 189, 148, 0.22), rgba(10, 14, 19, 0.1)),
-    #0a1512;
+    linear-gradient(135deg, rgba(125, 231, 255, 0.16), rgba(0, 116, 184, 0.16)),
+    #0c1720;
 }
 
 .roadmap-card-image.tone-gray,
@@ -674,8 +692,8 @@ body:has(._MeshPaintingDoc_roadmap) {
 .roadmap-card-image.completed,
 .roadmap-modal-image.completed {
   background:
-    linear-gradient(135deg, rgba(71, 168, 255, 0.16), rgba(56, 189, 148, 0.16)),
-    #0d1518;
+    linear-gradient(135deg, rgba(49, 199, 255, 0.18), rgba(0, 116, 184, 0.16)),
+    #0b1721;
 }
 
 .roadmap-card-image-label,
@@ -724,16 +742,16 @@ body:has(._MeshPaintingDoc_roadmap) {
   width: 30px;
   height: 30px;
   place-items: center;
-  border: 1px solid rgba(210, 220, 231, 0.45);
+  border: 1px solid rgba(125, 231, 255, 0.45);
   border-radius: 50%;
-  background: rgba(238, 244, 251, 0.88);
-  color: #202933;
+  background: rgba(17, 25, 35, 0.92);
+  color: var(--ue-cyan);
   font-size: 22px;
   line-height: 1;
 }
 
 .roadmap-modal-close:hover {
-  background: #ffffff;
+  background: var(--ue-panel-hover);
 }
 
 .roadmap-modal-image {
@@ -800,8 +818,8 @@ body:has(._MeshPaintingDoc_roadmap) {
   height: 24px;
   place-items: center;
   border-radius: 999px;
-  background: #aab5c2;
-  color: #29323d;
+  background: var(--ue-blue-3);
+  color: #f8fbff;
   font-size: 10px;
   font-weight: 900;
 }
@@ -843,8 +861,8 @@ body:has(._MeshPaintingDoc_roadmap) {
   padding: 9px 13px;
   border: 0;
   border-radius: 4px;
-  background: #a9b2bd;
-  color: #f8fbff;
+  background: #243342;
+  color: #dce8f3;
   font-size: 10px;
   font-weight: 900;
   line-height: 1;
@@ -852,12 +870,12 @@ body:has(._MeshPaintingDoc_roadmap) {
 }
 
 .roadmap-modal-footer button:hover {
-  background: #c7d0da;
-  color: #141b23;
+  background: var(--ue-panel-hover);
+  color: #ffffff;
 }
 
 .roadmap-modal-footer button.active {
-  background: #47a8ff;
+  background: var(--ue-blue);
   color: #07111d;
 }
 
@@ -875,10 +893,10 @@ body:has(._MeshPaintingDoc_roadmap) {
 
 .roadmap-feedback-form textarea {
   width: 100%;
-  border: 1px solid rgba(73, 92, 112, 0.78);
+  border: 1px solid var(--ue-border);
   border-radius: 5px;
-  background: #0d131a;
-  color: #eaf2fb;
+  background: var(--ue-bg-alt);
+  color: var(--ue-text);
   font: inherit;
   font-size: 12px;
   font-weight: 700;
@@ -892,8 +910,8 @@ body:has(._MeshPaintingDoc_roadmap) {
 }
 
 .roadmap-feedback-form textarea:focus {
-  border-color: rgba(120, 195, 255, 0.86);
-  box-shadow: 0 0 0 2px rgba(71, 168, 255, 0.16);
+  border-color: rgba(49, 199, 255, 0.86);
+  box-shadow: 0 0 0 2px rgba(0, 169, 224, 0.16);
 }
 
 .roadmap-feedback-actions {
@@ -911,7 +929,7 @@ body:has(._MeshPaintingDoc_roadmap) {
 }
 
 .roadmap-feedback-status.success {
-  color: #58d7a0;
+  color: var(--ue-cyan);
 }
 
 .roadmap-feedback-status.error {
@@ -919,12 +937,12 @@ body:has(._MeshPaintingDoc_roadmap) {
 }
 
 .roadmap-modal-footer .roadmap-feedback-submit {
-  background: #1678d2;
+  background: var(--ue-blue-3);
   color: #f8fbff;
 }
 
 .roadmap-modal-footer .roadmap-feedback-submit:hover {
-  background: #248dea;
+  background: var(--ue-blue);
   color: #ffffff;
 }
 
@@ -978,19 +996,19 @@ body:has(._MeshPaintingDoc_roadmap) {
 }
 
 .DocSearch-Button {
-  border: 1px solid rgba(73, 92, 112, 0.78);
+  border: 1px solid var(--ue-border);
   border-radius: 6px;
-  background: #111821;
+  background: var(--ue-panel);
 }
 
 .DocSearch-Button:hover {
-  border-color: rgba(120, 195, 255, 0.72);
-  background: #151d27;
+  border-color: rgba(49, 199, 255, 0.72);
+  background: var(--ue-panel-hover);
 }
 
 .VPFooter {
-  border-top: 1px solid rgba(73, 92, 112, 0.72);
-  background: #090d12 !important;
+  border-top: 1px solid var(--ue-border);
+  background: var(--ue-bg-alt) !important;
 }
 
 @media (max-width: 960px) {
