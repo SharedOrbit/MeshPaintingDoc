@@ -11,7 +11,7 @@ export default defineConfig({
 
   head: [
     ['link', { rel: 'icon', href: '/MeshPaintingDoc/icon.png' }],
-    ['meta', { name: 'theme-color', content: '#0b1118' }],
+    ['meta', { name: 'theme-color', content: '#151515' }],
     ['meta', { property: 'og:title', content: 'Mesh Painting - Runtime & Multiplayer Ready' }],
     ['meta', { property: 'og:description', content: 'GPU-powered runtime mesh painting for Unreal Engine with static and skeletal mesh support, seam-safe UV projection, and multiplayer-ready paint replication.' }]
   ],
