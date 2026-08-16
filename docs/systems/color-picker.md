@@ -152,22 +152,25 @@ Eraser mode does not add colors to history.
 
 ## Eyedropper
 
-The eyedropper can sample both painted targets and visible viewport color.
+The eyedropper samples the mesh or the visible viewport according to `PaintingModeControllerComponent > Color Picker Sample Mode`:
 
-Flow:
+- `Mesh Unlit Color`: samples the mesh unlit/base color and ignores scene lighting. This is the default.
+- `Viewport Lit Color`: samples the visible viewport pixel, including lighting.
+- `Mesh Unlit Color Then Viewport`: uses the unlit mesh color first, then falls back to the visible viewport color when needed.
+
+Eyedropper flow:
 
 ```text
 Begin eyedropper
--> Left mouse confirms
--> Trace under cursor
--> Try paint target color sample
--> Fallback to viewport pixel sample
+-> Left mouse samples under the cursor using the selected sample mode
 -> Update current color
 -> Commit color
 -> Exit eyedropper
 ```
 
-Right mouse or Escape cancels eyedropper mode.
+`Space` performs the same sample immediately while Painting Mode is active. It does not require the eyedropper button to be active.
+
+Right mouse or Escape cancels active eyedropper mode.
 
 ## Panel Events
 

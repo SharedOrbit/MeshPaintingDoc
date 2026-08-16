@@ -1,5 +1,7 @@
 import { defineConfig } from 'vitepress'
 
+const documentationReleaseTimestamp = Date.parse('2026-08-15T12:00:00+03:00')
+
 export default defineConfig({
   title: 'Mesh Painting',
   description: 'GPU-powered runtime mesh painting for Unreal Engine with static and skeletal mesh support, seam-safe UV projection, and multiplayer-ready paint replication.',
@@ -8,6 +10,12 @@ export default defineConfig({
   cleanUrls: true,
   lastUpdated: true,
   appearance: false,
+
+  transformPageData(pageData) {
+    if (!pageData.isNotFound) {
+      return { lastUpdated: documentationReleaseTimestamp }
+    }
+  },
 
   head: [
     ['link', { rel: 'icon', href: '/MeshPaintingDoc/icon.png' }],
@@ -38,6 +46,7 @@ export default defineConfig({
         text: 'Product',
         items: [
           { text: 'Roadmap', link: '/roadmap' },
+          { text: 'Version Updates', link: '/reference/changelog' },
           { text: 'Demo', link: '/demo' },
           { text: 'Troubleshooting', link: '/reference/troubleshooting' },
           { text: 'Contact', link: '/contact' }
@@ -55,6 +64,8 @@ export default defineConfig({
         items: [
           { text: 'Paint Target', link: '/systems/paint-target' },
           { text: 'Painting Controller', link: '/systems/painting-controller' },
+          { text: 'Save / Load Paint', link: '/systems/save-load' },
+          { text: 'Export Painted Textures', link: '/systems/export-painted-textures' },
           { text: 'Color Picker', link: '/systems/color-picker' },
           { text: 'Multiplayer', link: '/systems/multiplayer' }
         ]

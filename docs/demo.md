@@ -6,7 +6,7 @@ Download a packaged Windows demo build and test the runtime character painting w
   <section class="demo-download-card">
     <h2>PaintingLowQuality</h2>
     <p>A lighter demo build for testing the core painting workflow on lower settings.</p>
-    <a class="demo-download-button" href="https://drive.google.com/uc?export=download&id=1WcZyXiTUv_C8n2RSByB2Y4VwuJAljtdP" target="_blank" rel="noopener">
+    <a class="demo-download-button" href="https://drive.google.com/file/d/1TwYKwF08odk929BTMttSeg_mtPOUibmC/view?usp=sharing" target="_blank" rel="noopener">
       Download Low Quality Demo
     </a>
   </section>
@@ -14,7 +14,7 @@ Download a packaged Windows demo build and test the runtime character painting w
   <section class="demo-download-card">
     <h2>PaintingLumen</h2>
     <p>A higher quality demo build for testing the same character painting workflow with Lumen enabled.</p>
-    <a class="demo-download-button" href="https://drive.google.com/uc?export=download&id=1ye1Fy4TvxekhVbiOBr_7dXrheGhVAWZA" target="_blank" rel="noopener">
+    <a class="demo-download-button" href="https://drive.google.com/file/d/1ADvmyctQRTmL21QVxvQkKzpFhOWqyYCD/view?usp=sharing" target="_blank" rel="noopener">
       Download Lumen Demo
     </a>
   </section>

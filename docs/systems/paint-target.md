@@ -114,6 +114,25 @@ The replication settings are used when the paint target should work in multiplay
 
 For more details, see [Multiplayer](/systems/multiplayer).
 
+## Patch History Settings
+
+Patch history powers the local [Save / Load Paint](/systems/save-load) workflow. It records the changed render-target pixels after a paint operation, rather than saving a full render target or replaying brush hits.
+
+![Patch History settings](/paint-target/05-patch-history-settings.png)
+
+| Setting | Purpose |
+| --- | --- |
+| `Record Paint Patch History` | Enables patch-history tracking. Keep this enabled when the target must support Save/Load. Disabling it also skips dirty-rect calculation and patch capture bookkeeping. |
+| `Max Patch History Entries` | Maximum stored patch count. `0` keeps every patch. A non-zero limit removes the oldest patches and can make a later save incomplete. |
+| `Max Patch History Bytes` | Maximum memory used by stored patch data. `0` disables byte-based trimming. As with the entry limit, trimming old patches prevents a complete reconstruction. |
+| `Patch History Dirty Rect Brush Size Multiplier` | Safety multiplier used when calculating the changed texture region. Leave the default `1.25` unless you have verified that a different brush setup still captures every changed pixel. |
+| `Patch History Dirty Rect Padding Pixels` | Extra texture pixels added around the changed region. Leave the default `8`; reducing it can cut off soft brush edges. |
+| `Compress Patch History` | Compresses stored pixel data to reduce runtime memory and SaveGame size. Keep this enabled unless profiling shows a specific reason not to. |
+
+Patch capture is intentionally deferred while a player paints. This avoids synchronous render-target readback during a brush stroke. `Export Paint Patch History` and `Compact Paint Patch History` flush pending patches before they return.
+
+For a complete save, leave both history limits at `0` and keep compression enabled. One target component records history for all entries in its `Mesh Targets` array.
+
 ## Events
 
 The component exposes paint-specific Blueprint events in the `Runtime Mesh Painting | Events` category. Unreal also shows the standard Actor Component activation events in the same Details panel.

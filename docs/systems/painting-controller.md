@@ -26,15 +26,7 @@ Add `PaintingModeControllerComponent` to the locally controlled player actor tha
 
 For a normal third-person character, add it to the character blueprint. For a drone or custom pawn, add it to the pawn that owns the camera input. A `PlayerController` owner is also supported for simple setups.
 
-`CharacterLock` mode expects the owner to be a character with:
-
-- `CharacterMovement`
-- `Camera`
-- `SpringArm`
-
-Use `Simple` mode when the owner is not a standard character or when you do not want the component to lock character movement.
-
-For the default First Person template, start with `Simple` mode. `CharacterLock` expects a SpringArm-based character camera setup, and `EnterPaintingMode` may return `false` if that setup is missing.
+Choose a `Control Mode` that matches the owning actor's camera setup. `EnterPaintingMode` validates required components and returns `false`, with a screen and log warning, when a required reference is missing.
 
 ## Control Mode and Input
 
@@ -52,25 +44,29 @@ The `Controls` and `Input` sections define how the component receives paint inpu
 
 Control modes:
 
-| Mode | Behavior |
-| --- | --- |
-| `Character Lock` | Locks normal character look behavior, shows the mouse cursor, applies paint-mode movement/camera behavior, then restores the previous state when paint mode exits. |
-| `Simple` | Uses painting input without requiring a character movement setup. This is the safer mode for drone pawns, custom pawns, tools, and non-character controllers. |
-| `None` | Disables the component's paint-mode input handling. Use this when you want to drive the component only from your own Blueprint or C++ code. |
+| Mode | What the plugin controls | Required setup |
+| --- | --- | --- |
+| `Third Person Controller` | Paint movement, orbit, pan, and spring-arm zoom while Painting Mode is open. Normal look input is restored when it closes. | An `ACharacter`, `CharacterMovementComponent`, and `SpringArmComponent`. |
+| `First Person Controller` | Middle Mouse rotates the player-controller view for painting. Your existing character movement remains active. | A `CameraComponent`. |
+| `Drone Controller` | Middle Mouse rotates the owner actor and `Shift + Middle Mouse` pans the camera. The plugin does not implement drone movement or a default wheel zoom binding. | A `CameraComponent`. Keep movement in your Pawn or Blueprint; map `CameraZoomAction` yourself when this mode needs zoom. |
+| `Simple` | Painting, direct color sampling, and brush-size input only. It does not take over camera, look, movement, orbit, pan, or zoom. | No camera, Spring Arm, or character movement component. |
+| `None` | Nothing. The component does not bind painting input or enter Painting Mode. | No required component. Drive behavior from your own Blueprint or C++. |
+
+For `First Person Controller` and `Drone Controller`, `CameraName` is optional. Leave it empty to use the active camera, or enter a component name when the owner has multiple cameras. `Third Person Controller` always uses a Spring Arm; it does not use `CameraName`.
 
 Default input assets:
 
 | Asset | Used For |
 | --- | --- |
 | `IA_Paint` | Starts, continues, and releases a paint stroke. |
-| `IA_PickColorAction` | Samples the color under the cursor. |
+| `IA_PickColorAction` | Samples the color under the cursor. The plugin's generated input context maps this to `Space`. |
 | `IA_OrbitCamera` | Starts camera orbit while paint mode is active. |
 | `IA_PanCamera` | Starts camera pan. The component only accepts pan while Shift is held. |
-| `IA_CameraZoom` | Zooms the spring arm in `CharacterLock` mode. |
+| `IA_CameraZoom` | Zooms the Spring Arm in `Third Person Controller` mode. |
 | `IA_AdjustBrushSize` | Adjusts brush size while the action is held and mouse delta is received. |
 | `IA_AdjustBrushSizeWheel` | Adjusts brush size from mouse wheel while Control is held. |
 | `IA_MouseDelta` | Feeds orbit, pan, and drag-based brush size changes. |
-| `IA_PaintingMove` | Moves the locked character in `CharacterLock` mode. |
+| `IA_PaintingMove` | Moves the character in `Third Person Controller` mode. |
 | `IA_TogglePaintingMode` | Toggles paint mode through the toggle mapping context. |
 
 The exact keys are controlled by the input mapping assets. Edit `IMC_PaintingMode` or `IMC_PaintingModeToggle` if your project needs different bindings.
@@ -111,7 +107,7 @@ Brush settings are stored on the controller and sent to the target when paint is
 
 Use `SetBrushSize` when changing brush size from UI. It clamps the value and fires `OnBrushSizeChanged`, so sliders and labels can stay synchronized.
 
-## Color Picker and Cursor
+## Color Picker, 3D Sampling, and Cursor
 
 The widget section controls the automatic runtime color picker. The cursor section controls the custom brush cursor shown outside the UI.
 
@@ -127,6 +123,20 @@ The widget section controls the automatic runtime color picker. The cursor secti
 | `Brush Cursor Hot Spot` | Normalized cursor hotspot. |
 
 When color picking is active or the cursor is over the color picker panel, painting and brush preview are blocked so UI interaction does not accidentally paint the mesh.
+
+### 3D Color Sampling
+
+`Color Picker Sample Mode` controls the color used by the 3D eyedropper, including direct sampling with `Space` while Painting Mode is active.
+
+![Color Picker Sample Mode setting](/painting-controller/11-color-picker-sample-mode.png)
+
+| Mode | Result |
+| --- | --- |
+| `Mesh Unlit Color` | Samples the mesh's unlit/base color without scene lighting. This is the default and is best when the sampled color should match the material rather than a lit viewport pixel. |
+| `Viewport Lit Color` | Samples the visible color at the cursor from the viewport. Lighting and other visible viewport effects can affect the result. |
+| `Mesh Unlit Color Then Viewport` | Tries the unlit mesh color first. If it cannot resolve one, it falls back to the visible viewport color. |
+
+Pressing `Space` immediately samples the color under the cursor using the selected mode. It does not require the eyedropper button to stay active.
 
 ### Custom Brush Cursor Texture
 
@@ -190,17 +200,17 @@ Camera settings only affect the owner while paint mode is active. When paint mod
 
 | Setting | Purpose |
 | --- | --- |
-| `Painting Movement Speed` | Movement speed used in `CharacterLock` mode. |
+| `Painting Movement Speed` | Movement speed used in `Third Person Controller` mode. |
 | `Orbit Yaw Sensitivity` | Horizontal orbit sensitivity. |
 | `Orbit Pitch Sensitivity` | Vertical orbit sensitivity. |
 | `Minimum Orbit Pitch` | Lower pitch clamp. |
 | `Maximum Orbit Pitch` | Upper pitch clamp. |
-| `Camera Zoom Sensitivity` | Spring arm zoom speed. |
-| `Minimum Camera Zoom Distance` | Closest allowed zoom distance. |
+| `Camera Zoom Sensitivity` | Spring Arm zoom speed in `Third Person Controller`, or camera zoom speed in `Drone Controller`. |
+| `Minimum Camera Zoom Distance` | Closest allowed zoom distance for modes that support zoom. |
 | `Maximum Camera Zoom Distance` | Farthest configured zoom distance. The controller does not zoom farther than the pre-paint default position. |
-| `Camera Pan Sensitivity` | Pan movement speed. |
+| `Camera Pan Sensitivity` | Pan speed in `Third Person Controller` and `Drone Controller`. |
 | `Camera Pan Max Offset` | Maximum pan offset from the saved default position. `0` removes this clamp. |
-| `Camera Restore Smoothing Speed` | Speed used when restoring zoom and pan after paint mode exits. |
+| `Camera Restore Smoothing Speed` | Speed used when restoring camera pan and zoom after Painting Mode exits. |
 
 Orbit and pan stop active painting before moving the camera. Brush size adjustment also stops painting so input states do not overlap.
 
@@ -251,7 +261,8 @@ For skeletal meshes, the command also carries screen projection data so other cl
 ## Common Mistakes
 
 - `Control Mode` is set to `None`, so no paint input is added.
-- `CharacterLock` is used on an actor that is not a character with camera, spring arm, and movement components.
+- `Third Person Controller` is used without an `ACharacter`, `CharacterMovementComponent`, or `SpringArmComponent`.
+- `First Person Controller` or `Drone Controller` is used without a `CameraComponent`, or `CameraName` does not match a camera component on the owner.
 - `Paint Target Components` contains the wrong target, so valid meshes under the cursor are ignored.
 - The target mesh does not block the selected `Paint Trace Channel`.
 - `Load Default Input Assets` is disabled but custom input actions or mapping contexts were not assigned.
